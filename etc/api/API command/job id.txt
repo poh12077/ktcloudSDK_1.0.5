@@ -1,0 +1,1 @@
+curl "https://api.ucloudbiz.olleh.com/d1/nc/Etc?command=queryAsyncJob&jobid=266bfb9d-1a82-46d3-b70c-1cccf78dfe1f" --header "X-Auth-Token: gAAAAABiu7BGN_PsB9fdh6ewJ3x3Qpb8aPQb8t11BEKBARXiNhzX7AJoHTEFb5KDsWvkfWCPixsVP2AdsUYgdFDaASAa2lJSf_Edhjj5CWnnrWeezZWiuLEp1f1QUEharKzTPIUAwxihNhBY3tazZ9ti8eMeZvzaMhOWNsDKx3mGINxxm4yHevE"

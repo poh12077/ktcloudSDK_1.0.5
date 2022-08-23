@@ -1,0 +1,29 @@
+{
+    "name":{
+        "vm":"yh",
+        "volume":"yhp"
+    },
+    "image":{
+        "vm":"03a6328b-76c8-4d15-8e3f-d5cae5cf1156",
+        "volume":"556aacd2-de16-47fc-b230-3db3a55be50d"
+    },
+    "firewall":{
+        "startPort":"0",
+        "endPort":"65535",
+        "sourceNetworkId" : "6b812762-c6bc-4a6d-affb-c469af1b4342",
+        "destinationNetworkAddress" : "172.25.1.1/24",
+        "protocol": "ALL",
+       "destinationNetworkId" : "71655962-3e67-42d6-a17d-6ab61a435dfe"      
+    },
+    "specs":{
+        "core8_ram16":"61c68bc1-3a56-4827-9fd1-6a7929362bf6"
+    },
+    "http":{
+        "timeout":10
+    },
+    "account":{
+        "id":"infra.op@solbox.com",
+        "password":"xJd*Qv*cBXpd7qX"
+    },
+    "networkId":"71655962-3e67-42d6-a17d-6ab61a435dfe"
+}

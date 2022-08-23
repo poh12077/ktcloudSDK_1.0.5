@@ -1,0 +1,1 @@
+curl -X POST "https://api.ucloudbiz.olleh.com/d1/server/servers/6ab6936f-964b-4d04-bb3a-7c08f57f2dd2/action" --header 'X-Auth-Token: gAAAAABitTdHKHRWJ3DtFDOTzR7GpnrHeQqJ0uQM_IxGX5IxFFAZKt3bXEmC8Kx3FwtOKGJe76hXp_FUXAlRM4FhKVfUTkq3iG1UT8v5UVnBs6RnIXYILxJsZBnc66Y95tRHRrjRDu3eO_LB862prZNgI0L4OKYnP9lFb3vP1lpHyOFmHU96rCI' -H "Content-Type: application/json" -d '{"shelve": null}'

@@ -1,0 +1,10 @@
+{
+	"startport": "0",
+	"protocol": "TCP",
+	"virtualipid": "404d6f04-2c9f-407e-ac7b-fa6a413d7ea0", (static nat일 경우 :  static nat 설정 id )
+	"action": "allow",
+	"srcnetworkid": "6b812762-c6bc-4a6d-affb-c469af1b4342", ( firewall 조회에서 확인 가능 )
+	"dstip": "172.25.1.1/24", (desternation network address)
+	"endport": "10000",
+	"dstnetworkid": "71655962-3e67-42d6-a17d-6ab61a435dfe" (desternation tier id )
+}

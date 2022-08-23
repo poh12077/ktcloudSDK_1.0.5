@@ -1,0 +1,108 @@
+{
+	"server": {
+		"user": "root",
+		"group": "root",
+		"id": "t",
+		"host": "tt",
+		"root_directory": "/stg/solrtmp/output",
+		"config_directory": "/usr/service/etc/solrtmp",
+		"pid_directory": "/stg/solrtmp",
+		"cache_directory": "/stg/solrtmp/cache"
+	},
+	"rtmp": {
+		"enable": true,
+		"port": 1935,
+		"max_connections": 100,
+		"accept": {
+			"in": true,
+			"out": true
+		}
+	},
+	"http": {
+		"enable": true,
+		"port": 80,
+		"max_connections": 100000,
+		"keep_alive": {
+			"enable": true,
+			"timeout": 60,
+			"max_count": 99
+		},
+		"ssl": {
+			"enable": false,
+			"port": 443,
+			"cert_file": "/usr/service/etc/solrtmp/cert/foo.crt",
+			"key_file": "/usr/service/etc/solrtmp/key/foo.key"
+		},
+		"headers": {
+			"custom": [],
+			"etag_enable": false,
+			"last_modified_enable": true,
+			"cache_control_enable": true,
+			"max_age_manifest": 1,
+			"max_age_chunk": 60
+		}
+	},
+	"stcp": {
+		"key_xxx": "",
+		"enable": true,
+		"accept": {
+			"in": true,
+			"out": true
+		},
+		"port": 5123,
+		"max_connections": 128
+	},
+	"logs": [
+		{
+			"name": "server",
+			"path": "/usr/service/logs/solrtmp/server.log",
+			"level": "trace",
+			"rotate": "/usr/service/logs/solrtmp/server_%YYYY%MM%DD.log",
+			"period": "day"
+		},
+		{
+			"name": "rtmp",
+			"path": "/usr/service/logs/solrtmp/rtmp.log",
+			"level": "trace",
+			"rotate": "/usr/service/logs/solrtmp/rtmp_%YYYY%MM%DD.log",
+			"period": "day"
+		},
+		{
+			"name": "http",
+			"path": "/usr/service/logs/solrtmp/http.log",
+			"level": "trace",
+			"rotate": "/usr/service/logs/solrtmp/http_%YYYY%MM%DD.log",
+			"period": "day"
+		},
+		{
+			"name": "stcp",
+			"path": "/usr/service/logs/solrtmp/stcp.log",
+			"level": "trace",
+			"rotate": "/usr/service/logs/solrtmp/stcp_%YYYY%MM%DD.log",
+			"period": "day"
+		}
+	],
+	"manager_server": {
+		"enable": false,
+		"url": "test",
+		"timeout": {
+			"connection": 10,
+			"socket": 10
+		},
+		"auth": {
+			"path": "/solrtmpManager/rfc"
+		},
+		"report": {
+			"path": "/solrtmpManager/rfc",
+			"period": 5
+		}
+	},
+	"metering": {
+		"path": "/usr/service/stat/solrtmp/%C/%A/%YYYY%MM%DDT%hh%mm.log",
+		"format": {
+			"file": "csv",
+			"time": "%YYYY%MM%DDT%hh%mm%ss"
+		},
+		"period": "min"
+	}
+}

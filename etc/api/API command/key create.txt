@@ -1,0 +1,1 @@
+curl -H "Content-Type: application/json" -X POST "https://api.ucloudbiz.olleh.com/d1/server/os-keypairs" --header 'X-Auth-Token: gAAAAABix4hLIYwbbuv2q8vYz0ljhiR1l9fr_Ml8-9Ni0YuceJX0-ai20cYbTJnfeNgU0JFXcpxOcrUFXJnoUKmjsydah7ZTfmtb4PyRuVBUb9EjZQC66jm9S7DsztiUoQVCAE2LR5nhJGyLBZ-AHZSzxpc5y83CGu0udwTX3Vp3YBpI9s4HeBs' -d '{ "keypair": { "name": "KeyPair-For-Test" } }'

@@ -1,0 +1,663 @@
+{
+  "nc_listfirewallrulesresponse": {
+    "firewallrules": [
+      {
+        "acls": [
+          {
+            "srcintfs": [
+              {
+                "networkname": "Private_Sub",
+                "networkid": "bc46a641-b77c-47fc-98f3-d033ccbadde7",
+                "interface": "840"
+              }
+            ],
+            "schedule": "always",
+            "poolnames": [
+              {
+                "natip": "211.34.231.112"
+              }
+            ],
+            "comments": "",
+            "dstaddrs": [
+              {
+                "ip": "all"
+              }
+            ],
+            "name": "4e6f7ef9-84aa-41a7-91bf-59691d07760",
+            "dstintfs": [
+              {
+                "networkname": "external",
+                "networkid": "6b812762-c6bc-4a6d-affb-c469af1b4342",
+                "interface": "3586"
+              }
+            ],
+            "action": "allow",
+            "id": 3,
+            "services": [
+              {
+                "protocol": "ALL"
+              }
+            ],
+            "srcaddrs": [
+              {
+                "ip": "all"
+              }
+            ],
+            "status": "enable"
+          },
+          {
+            "srcintfs": [
+              {
+                "networkname": "external",
+                "networkid": "6b812762-c6bc-4a6d-affb-c469af1b4342",
+                "interface": "3586"
+              }
+            ],
+            "schedule": "always",
+            "poolname": "",
+            "comments": "",
+            "dstaddrs": [
+              {
+                "ip": "PF_211.34.231.112_10003_TCP"
+              }
+            ],
+            "name": "35412d25-f595-4ce9-8a3b-34fddc05c10",
+            "dstintfs": [
+              {
+                "networkname": "Private_Sub",
+                "networkid": "bc46a641-b77c-47fc-98f3-d033ccbadde7",
+                "interface": "840"
+              }
+            ],
+            "action": "allow",
+            "id": 5,
+            "services": [
+              {
+                "protocol": "ALL"
+              }
+            ],
+            "srcaddrs": [
+              {
+                "ip": "all"
+              }
+            ],
+            "status": "enable"
+          },
+          {
+            "srcintfs": [
+              {
+                "networkname": "external",
+                "networkid": "6b812762-c6bc-4a6d-affb-c469af1b4342",
+                "interface": "3586"
+              }
+            ],
+            "schedule": "always",
+            "poolname": "",
+            "comments": "",
+            "dstaddrs": [
+              {
+                "ip": "PF_211.34.231.112_22_TCP"
+              }
+            ],
+            "name": "e590c538-8141-45c6-9a56-575bf369635",
+            "dstintfs": [
+              {
+                "networkname": "Private_Sub",
+                "networkid": "bc46a641-b77c-47fc-98f3-d033ccbadde7",
+                "interface": "840"
+              }
+            ],
+            "action": "allow",
+            "id": 7,
+            "services": [
+              {
+                "protocol": "ALL"
+              }
+            ],
+            "srcaddrs": [
+              {
+                "ip": "all"
+              }
+            ],
+            "status": "enable"
+          },
+          {
+            "srcintfs": [
+              {
+                "networkname": "external",
+                "networkid": "6b812762-c6bc-4a6d-affb-c469af1b4342",
+                "interface": "3586"
+              }
+            ],
+            "schedule": "always",
+            "poolname": "",
+            "comments": "",
+            "dstaddrs": [
+              {
+                "ip": "PF_211.34.231.112_10003_TCP"
+              }
+            ],
+            "name": "6d8ffa4c-6aea-416a-8ac8-3098d2fe15f",
+            "dstintfs": [
+              {
+                "networkname": "Private_Sub",
+                "networkid": "bc46a641-b77c-47fc-98f3-d033ccbadde7",
+                "interface": "840"
+              }
+            ],
+            "action": "allow",
+            "id": 4,
+            "services": [
+              {
+                "startport": "1",
+                "protocol": "TCP",
+                "endport": "65535"
+              }
+            ],
+            "srcaddrs": [
+              {
+                "ip": "all"
+              }
+            ],
+            "status": "enable"
+          },
+          {
+            "srcintfs": [
+              {
+                "networkname": "external",
+                "networkid": "6b812762-c6bc-4a6d-affb-c469af1b4342",
+                "interface": "3586"
+              }
+            ],
+            "schedule": "always",
+            "poolname": "",
+            "comments": "",
+            "dstaddrs": [
+              {
+                "ip": "PF_211.34.231.112_10003_TCP"
+              }
+            ],
+            "name": "b71ee239-79eb-479a-8031-33e53139e16",
+            "dstintfs": [
+              {
+                "networkname": "Private_Sub",
+                "networkid": "bc46a641-b77c-47fc-98f3-d033ccbadde7",
+                "interface": "840"
+              }
+            ],
+            "action": "allow",
+            "id": 6,
+            "services": [
+              {
+                "protocol": "ALL"
+              }
+            ],
+            "srcaddrs": [
+              {
+                "ip": "all"
+              }
+            ],
+            "status": "enable"
+          },
+          {
+            "srcintfs": [
+              {
+                "networkname": "external",
+                "networkid": "6b812762-c6bc-4a6d-affb-c469af1b4342",
+                "interface": "3586"
+              }
+            ],
+            "schedule": "always",
+            "poolname": "",
+            "comments": "",
+            "dstaddrs": [
+              {
+                "ip": "PF_211.34.231.112_8080_TCP"
+              }
+            ],
+            "name": "5c004433-278f-4981-a82c-cd06cff70bf",
+            "dstintfs": [
+              {
+                "networkname": "Private_Sub",
+                "networkid": "bc46a641-b77c-47fc-98f3-d033ccbadde7",
+                "interface": "840"
+              }
+            ],
+            "action": "allow",
+            "id": 10,
+            "services": [
+              {
+                "protocol": "ALL"
+              }
+            ],
+            "srcaddrs": [
+              {
+                "ip": "all"
+              }
+            ],
+            "status": "enable"
+          },
+          {
+            "srcintfs": [
+              {
+                "networkname": "external",
+                "networkid": "6b812762-c6bc-4a6d-affb-c469af1b4342",
+                "interface": "3586"
+              }
+            ],
+            "schedule": "always",
+            "poolname": "",
+            "comments": "",
+            "dstaddrs": [
+              {
+                "ip": "PF_211.34.231.112_8081_TCP"
+              }
+            ],
+            "name": "9ac35049-02ed-4f62-8e15-d47198049e4",
+            "dstintfs": [
+              {
+                "networkname": "Private_Sub",
+                "networkid": "bc46a641-b77c-47fc-98f3-d033ccbadde7",
+                "interface": "840"
+              }
+            ],
+            "action": "allow",
+            "id": 11,
+            "services": [
+              {
+                "protocol": "ALL"
+              }
+            ],
+            "srcaddrs": [
+              {
+                "ip": "all"
+              }
+            ],
+            "status": "enable"
+          },
+          {
+            "srcintfs": [
+              {
+                "networkname": "external",
+                "networkid": "6b812762-c6bc-4a6d-affb-c469af1b4342",
+                "interface": "3586"
+              }
+            ],
+            "schedule": "always",
+            "poolname": "",
+            "comments": "",
+            "dstaddrs": [
+              {
+                "ip": "PF_211.34.231.112_10001_TCP"
+              }
+            ],
+            "name": "7f0fdcb3-af58-48f8-b03c-a9ce470d651",
+            "dstintfs": [
+              {
+                "networkname": "Private_Sub",
+                "networkid": "bc46a641-b77c-47fc-98f3-d033ccbadde7",
+                "interface": "840"
+              }
+            ],
+            "action": "allow",
+            "id": 12,
+            "services": [
+              {
+                "protocol": "ALL"
+              }
+            ],
+            "srcaddrs": [
+              {
+                "ip": "all"
+              }
+            ],
+            "status": "enable"
+          },
+          {
+            "srcintfs": [
+              {
+                "networkname": "external",
+                "networkid": "6b812762-c6bc-4a6d-affb-c469af1b4342",
+                "interface": "3586"
+              }
+            ],
+            "schedule": "always",
+            "poolname": "",
+            "comments": "",
+            "dstaddrs": [
+              {
+                "ip": "SN_211.34.231.113"
+              }
+            ],
+            "name": "64e97de9-3092-4d32-b61f-83cf94d27d7",
+            "dstintfs": [
+              {
+                "networkname": "Private_Sub",
+                "networkid": "bc46a641-b77c-47fc-98f3-d033ccbadde7",
+                "interface": "840"
+              }
+            ],
+            "action": "allow",
+            "id": 13,
+            "services": [
+              {
+                "protocol": "ALL"
+              }
+            ],
+            "srcaddrs": [
+              {
+                "ip": "all"
+              }
+            ],
+            "status": "enable"
+          },
+          {
+            "srcintfs": [
+              {
+                "networkname": "external",
+                "networkid": "6b812762-c6bc-4a6d-affb-c469af1b4342",
+                "interface": "3586"
+              }
+            ],
+            "schedule": "always",
+            "poolname": "",
+            "comments": "",
+            "dstaddrs": [
+              {
+                "ip": "SN_211.34.231.114"
+              }
+            ],
+            "name": "41140f11-48ea-4258-ad71-a78e2e93871",
+            "dstintfs": [
+              {
+                "networkname": "Private_Sub",
+                "networkid": "bc46a641-b77c-47fc-98f3-d033ccbadde7",
+                "interface": "840"
+              }
+            ],
+            "action": "allow",
+            "id": 14,
+            "services": [
+              {
+                "protocol": "ALL"
+              }
+            ],
+            "srcaddrs": [
+              {
+                "ip": "all"
+              }
+            ],
+            "status": "enable"
+          },
+          {
+            "srcintfs": [
+              {
+                "networkname": "external",
+                "networkid": "6b812762-c6bc-4a6d-affb-c469af1b4342",
+                "interface": "3586"
+              }
+            ],
+            "schedule": "always",
+            "poolname": "",
+            "comments": "",
+            "dstaddrs": [
+              {
+                "ip": "PF_211.34.231.112_10002_TCP"
+              }
+            ],
+            "name": "8128ded1-85f0-4a30-b954-f4e6d3e0d5a",
+            "dstintfs": [
+              {
+                "networkname": "Private_Sub",
+                "networkid": "bc46a641-b77c-47fc-98f3-d033ccbadde7",
+                "interface": "840"
+              }
+            ],
+            "action": "allow",
+            "id": 15,
+            "services": [
+              {
+                "protocol": "ALL"
+              }
+            ],
+            "srcaddrs": [
+              {
+                "ip": "all"
+              }
+            ],
+            "status": "enable"
+          },
+          {
+            "srcintfs": [
+              {
+                "networkname": "external",
+                "networkid": "6b812762-c6bc-4a6d-affb-c469af1b4342",
+                "interface": "3586"
+              }
+            ],
+            "schedule": "always",
+            "poolname": "",
+            "comments": "",
+            "dstaddrs": [
+              {
+                "ip": "SN_211.34.231.115"
+              }
+            ],
+            "name": "5497e235-87c6-4b12-a779-24113d2c995",
+            "dstintfs": [
+              {
+                "networkname": "Private_Sub",
+                "networkid": "bc46a641-b77c-47fc-98f3-d033ccbadde7",
+                "interface": "840"
+              }
+            ],
+            "action": "allow",
+            "id": 16,
+            "services": [
+              {
+                "protocol": "ALL"
+              }
+            ],
+            "srcaddrs": [
+              {
+                "ip": "all"
+              }
+            ],
+            "status": "enable"
+          },
+          {
+            "srcintfs": [
+              {
+                "networkname": "external",
+                "networkid": "6b812762-c6bc-4a6d-affb-c469af1b4342",
+                "interface": "3586"
+              }
+            ],
+            "schedule": "always",
+            "poolname": "",
+            "comments": "",
+            "dstaddrs": [
+              {
+                "ip": "SN_211.34.231.117"
+              }
+            ],
+            "name": "48ebc0f3-3921-4bd7-bd82-1bb2fe7de4f",
+            "dstintfs": [
+              {
+                "networkname": "Private_Sub",
+                "networkid": "bc46a641-b77c-47fc-98f3-d033ccbadde7",
+                "interface": "840"
+              }
+            ],
+            "action": "allow",
+            "id": 17,
+            "services": [
+              {
+                "protocol": "ALL"
+              }
+            ],
+            "srcaddrs": [
+              {
+                "ip": "all"
+              }
+            ],
+            "status": "enable"
+          },
+          {
+            "srcintfs": [
+              {
+                "networkname": "external",
+                "networkid": "6b812762-c6bc-4a6d-affb-c469af1b4342",
+                "interface": "3586"
+              }
+            ],
+            "schedule": "always",
+            "poolname": "",
+            "comments": "",
+            "dstaddrs": [
+              {
+                "ip": "SN_211.34.231.118"
+              }
+            ],
+            "name": "be471c9d-8e37-40c7-95b4-b2a01014534",
+            "dstintfs": [
+              {
+                "networkname": "Private_Sub",
+                "networkid": "bc46a641-b77c-47fc-98f3-d033ccbadde7",
+                "interface": "840"
+              }
+            ],
+            "action": "allow",
+            "id": 18,
+            "services": [
+              {
+                "protocol": "ALL"
+              }
+            ],
+            "srcaddrs": [
+              {
+                "ip": "all"
+              }
+            ],
+            "status": "enable"
+          },
+          {
+            "srcintfs": [
+              {
+                "networkname": "external",
+                "networkid": "6b812762-c6bc-4a6d-affb-c469af1b4342",
+                "interface": "3586"
+              }
+            ],
+            "schedule": "always",
+            "poolname": "",
+            "comments": "",
+            "dstaddrs": [
+              {
+                "ip": "SN_211.34.231.120"
+              }
+            ],
+            "name": "b56c412a-ff8d-4749-a138-453af1f2b08",
+            "dstintfs": [
+              {
+                "networkname": "Private_Sub",
+                "networkid": "bc46a641-b77c-47fc-98f3-d033ccbadde7",
+                "interface": "840"
+              }
+            ],
+            "action": "allow",
+            "id": 19,
+            "services": [
+              {
+                "protocol": "ALL"
+              }
+            ],
+            "srcaddrs": [
+              {
+                "ip": "all"
+              }
+            ],
+            "status": "enable"
+          },
+          {
+            "srcintfs": [
+              {
+                "networkname": "external",
+                "networkid": "6b812762-c6bc-4a6d-affb-c469af1b4342",
+                "interface": "3586"
+              }
+            ],
+            "schedule": "always",
+            "poolname": "",
+            "comments": "",
+            "dstaddrs": [
+              {
+                "ip": "SN_211.34.231.119"
+              }
+            ],
+            "name": "6ec993b8-60d6-4457-aac4-87cc0fa422d",
+            "dstintfs": [
+              {
+                "networkname": "Private_Sub",
+                "networkid": "bc46a641-b77c-47fc-98f3-d033ccbadde7",
+                "interface": "840"
+              }
+            ],
+            "action": "allow",
+            "id": 20,
+            "services": [
+              {
+                "protocol": "ALL"
+              }
+            ],
+            "srcaddrs": [
+              {
+                "ip": "all"
+              }
+            ],
+            "status": "enable"
+          },
+          {
+            "srcintfs": [
+              {
+                "networkname": "external",
+                "networkid": "6b812762-c6bc-4a6d-affb-c469af1b4342",
+                "interface": "3586"
+              }
+            ],
+            "schedule": "always",
+            "poolname": "",
+            "comments": "",
+            "dstaddrs": [
+              {
+                "ip": "SN_211.34.231.116"
+              }
+            ],
+            "name": "2341a7c8-2bc0-40f0-9192-f57ab4fcb8f",
+            "dstintfs": [
+              {
+                "networkname": "Private_Sub",
+                "networkid": "bc46a641-b77c-47fc-98f3-d033ccbadde7",
+                "interface": "840"
+              }
+            ],
+            "action": "allow",
+            "id": 21,
+            "services": [
+              {
+                "protocol": "TCP"
+              }
+            ],
+            "srcaddrs": [
+              {
+                "ip": "all"
+              }
+            ],
+            "status": "enable"
+          }
+        ],
+        "vpcid": "efbe1daa-0cc1-4f39-9c1e-71963d549e41"
+      }
+    ]
+  }
+}

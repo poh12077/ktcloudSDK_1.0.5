@@ -1,0 +1,18 @@
+{
+  "user": "root",
+  "group": "root",
+  "id": "KT-Live-yh0",
+  "io": {
+    "type": "tcp",
+    "port": 5122
+  },
+  "timeout": {
+    "network": 10,
+    "transcoder": 30
+  },
+  "log": {
+    "path": "/usr/service/logs/stfw/stfw.log",
+    "level": "trace",
+    "rotate": "/usr/service/logs/stfw/stfw_%YYYY%MM%DDT%hh%mm%ss.log"
+  }
+}

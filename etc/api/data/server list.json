@@ -1,0 +1,524 @@
+﻿{
+  "servers": [
+    {
+      "tenant_id": "c3d6ced17b1d45d98af60cbeff8f4bbd",
+      "metadata": {},
+      "addresses": {
+        "Private": [
+          {
+            "OS-EXT-IPS-MAC:mac_addr": "fa:16:3e:db:53:10",
+            "OS-EXT-IPS:type": "fixed",
+            "addr": "172.25.1.124",
+            "version": 4
+          }
+        ]
+      },
+      "OS-EXT-STS:task_state": null,
+      "description": null,
+      "OS-DCF:diskConfig": "MANUAL",
+      "trusted_image_certificates": null,
+      "OS-EXT-AZ:availability_zone": "DX-M1",
+      "links": [
+        {
+          "rel": "self",
+          "href": "https://10.10.73.20:13774/v2.1/servers/340436a1-44ad-41d9-bcfc-8b34c39dc826"
+        },
+        {
+          "rel": "bookmark",
+          "href": "https://10.10.73.20:13774/servers/340436a1-44ad-41d9-bcfc-8b34c39dc826"
+        }
+      ],
+      "OS-EXT-STS:power_state": 1,
+      "id": "340436a1-44ad-41d9-bcfc-8b34c39dc826",
+      "os-extended-volumes:volumes_attached": [
+        {
+          "delete_on_termination": true,
+          "id": "91ae3003-0b5f-4173-b619-a10e66c5d74d"
+        }
+      ],
+      "locked": false,
+      "image": "",
+      "accessIPv4": "",
+      "OS-SRV-USG:terminated_at": null,
+      "accessIPv6": "",
+      "created": "2022-06-23T09:19:38Z",
+      "hostId": "0fe21a6692b090811fec798b6174758c5b4a2192e39efcf37017740e",
+      "tags": [
+        "server"
+      ],
+      "flavor": {
+        "disk": 0,
+        "swap": 0,
+        "original_name": "8x16.itl",
+        "extra_specs": {
+          "hw:cpu_socket": "2",
+          "aggregate_instance_extra_specs:server_intel": "true",
+          "hw:cpu_cores": "4",
+          "hw:cpu_thread": "1"
+        },
+        "ephemeral": 0,
+        "vcpus": 8,
+        "ram": 16384
+      },
+      "key_name": "ssh_yh",
+      "security_groups": [
+        {
+          "name": "default"
+        }
+      ],
+      "config_drive": "",
+      "OS-EXT-STS:vm_state": "active",
+      "user_id": "5a77e2cf9b9f4fd78967e55e66ed5a41",
+      "name": "Test-Server",
+      "progress": 0,
+      "OS-SRV-USG:launched_at": "2022-06-23T09:20:07.000000",
+      "updated": "2022-06-23T09:20:07Z",
+      "status": "ACTIVE"
+    },
+    {
+      "tenant_id": "c3d6ced17b1d45d98af60cbeff8f4bbd",
+      "metadata": {},
+      "addresses": {
+        "Private": [
+          {
+            "OS-EXT-IPS-MAC:mac_addr": "fa:16:3e:44:2e:68",
+            "OS-EXT-IPS:type": "fixed",
+            "addr": "172.25.1.48",
+            "version": 4
+          }
+        ]
+      },
+      "OS-EXT-STS:task_state": null,
+      "description": null,
+      "OS-DCF:diskConfig": "MANUAL",
+      "trusted_image_certificates": null,
+      "OS-EXT-AZ:availability_zone": "DX-M1",
+      "links": [
+        {
+          "rel": "self",
+          "href": "https://10.10.73.20:13774/v2.1/servers/6ab6936f-964b-4d04-bb3a-7c08f57f2dd2"
+        },
+        {
+          "rel": "bookmark",
+          "href": "https://10.10.73.20:13774/servers/6ab6936f-964b-4d04-bb3a-7c08f57f2dd2"
+        }
+      ],
+      "OS-EXT-STS:power_state": 1,
+      "id": "6ab6936f-964b-4d04-bb3a-7c08f57f2dd2",
+      "os-extended-volumes:volumes_attached": [
+        {
+          "delete_on_termination": true,
+          "id": "21835790-76e0-4bda-b5bc-fca50ff03080"
+        }
+      ],
+      "locked": false,
+      "image": "",
+      "accessIPv4": "",
+      "OS-SRV-USG:terminated_at": null,
+      "accessIPv6": "",
+      "created": "2022-06-23T08:58:05Z",
+      "hostId": "0fe21a6692b090811fec798b6174758c5b4a2192e39efcf37017740e",
+      "tags": [
+        "server"
+      ],
+      "flavor": {
+        "disk": 0,
+        "swap": 0,
+        "original_name": "1x2.itl",
+        "extra_specs": {
+          "aggregate_instance_extra_specs:server_intel": "true"
+        },
+        "ephemeral": 0,
+        "vcpus": 1,
+        "ram": 2048
+      },
+      "key_name": "ssh_yh",
+      "security_groups": [
+        {
+          "name": "default"
+        }
+      ],
+      "config_drive": "",
+      "OS-EXT-STS:vm_state": "active",
+      "user_id": "5a77e2cf9b9f4fd78967e55e66ed5a41",
+      "name": "Test-Server",
+      "progress": 0,
+      "OS-SRV-USG:launched_at": "2022-06-23T09:00:34.000000",
+      "updated": "2022-06-23T09:00:34Z",
+      "status": "ACTIVE"
+    },
+    {
+      "tenant_id": "c3d6ced17b1d45d98af60cbeff8f4bbd",
+      "metadata": {},
+      "addresses": {
+        "Private": [
+          {
+            "OS-EXT-IPS-MAC:mac_addr": "fa:16:3e:8c:07:ab",
+            "OS-EXT-IPS:type": "fixed",
+            "addr": "172.25.1.114",
+            "version": 4
+          }
+        ]
+      },
+      "OS-EXT-STS:task_state": null,
+      "description": null,
+      "OS-DCF:diskConfig": "MANUAL",
+      "trusted_image_certificates": null,
+      "OS-EXT-AZ:availability_zone": "DX-M1",
+      "links": [
+        {
+          "rel": "self",
+          "href": "https://10.10.73.20:13774/v2.1/servers/f48995aa-c176-4b67-a8e0-85274da5cd48"
+        },
+        {
+          "rel": "bookmark",
+          "href": "https://10.10.73.20:13774/servers/f48995aa-c176-4b67-a8e0-85274da5cd48"
+        }
+      ],
+      "OS-EXT-STS:power_state": 1,
+      "id": "f48995aa-c176-4b67-a8e0-85274da5cd48",
+      "os-extended-volumes:volumes_attached": [
+        {
+          "delete_on_termination": true,
+          "id": "9ec1db7a-3159-444c-83bf-b969e6d9a202"
+        }
+      ],
+      "locked": false,
+      "image": "",
+      "accessIPv4": "",
+      "OS-SRV-USG:terminated_at": null,
+      "accessIPv6": "",
+      "created": "2022-06-23T08:33:54Z",
+      "hostId": "994d1150a796630b5f3dce091bd5563c57c3f302b0330e1cfb6678c1",
+      "tags": [
+        "server"
+      ],
+      "flavor": {
+        "disk": 0,
+        "swap": 0,
+        "original_name": "32x256.itl",
+        "extra_specs": {
+          "hw:cpu_socket": "2",
+          "aggregate_instance_extra_specs:server_intel": "true",
+          "hw:cpu_cores": "16",
+          "hw:cpu_thread": "1"
+        },
+        "ephemeral": 0,
+        "vcpus": 32,
+        "ram": 262144
+      },
+      "key_name": "ssh_yh",
+      "security_groups": [
+        {
+          "name": "default"
+        }
+      ],
+      "config_drive": "",
+      "OS-EXT-STS:vm_state": "active",
+      "user_id": "5a77e2cf9b9f4fd78967e55e66ed5a41",
+      "name": "Test-Server",
+      "progress": 0,
+      "OS-SRV-USG:launched_at": "2022-06-23T08:36:08.000000",
+      "updated": "2022-06-23T08:36:08Z",
+      "status": "ACTIVE"
+    },
+    {
+      "tenant_id": "c3d6ced17b1d45d98af60cbeff8f4bbd",
+      "metadata": {},
+      "addresses": {
+        "Private": [
+          {
+            "OS-EXT-IPS-MAC:mac_addr": "fa:16:3e:45:da:78",
+            "OS-EXT-IPS:type": "fixed",
+            "addr": "172.25.1.110",
+            "version": 4
+          }
+        ]
+      },
+      "OS-EXT-STS:task_state": null,
+      "description": null,
+      "OS-DCF:diskConfig": "MANUAL",
+      "trusted_image_certificates": null,
+      "OS-EXT-AZ:availability_zone": "DX-M1",
+      "links": [
+        {
+          "rel": "self",
+          "href": "https://10.10.73.20:13774/v2.1/servers/abd71c01-9a6b-41c5-8e30-2a0864fa2d56"
+        },
+        {
+          "rel": "bookmark",
+          "href": "https://10.10.73.20:13774/servers/abd71c01-9a6b-41c5-8e30-2a0864fa2d56"
+        }
+      ],
+      "OS-EXT-STS:power_state": 1,
+      "id": "abd71c01-9a6b-41c5-8e30-2a0864fa2d56",
+      "os-extended-volumes:volumes_attached": [
+        {
+          "delete_on_termination": true,
+          "id": "7547565f-e201-48d2-84d0-909e395661ec"
+        }
+      ],
+      "locked": false,
+      "image": "",
+      "accessIPv4": "",
+      "OS-SRV-USG:terminated_at": null,
+      "accessIPv6": "",
+      "created": "2022-06-23T01:56:11Z",
+      "hostId": "f76ca8b6693c3975fcace81a322f923142af8e4031adfb350ab050a3",
+      "tags": [
+        "server"
+      ],
+      "flavor": {
+        "disk": 0,
+        "swap": 0,
+        "original_name": "4x4.itl",
+        "extra_specs": {
+          "hw:cpu_socket": "2",
+          "aggregate_instance_extra_specs:server_intel": "true",
+          "hw:cpu_cores": "2",
+          "hw:cpu_thread": "1"
+        },
+        "ephemeral": 0,
+        "vcpus": 4,
+        "ram": 4096
+      },
+      "key_name": "ssh_yh",
+      "security_groups": [
+        {
+          "name": "default"
+        }
+      ],
+      "config_drive": "",
+      "OS-EXT-STS:vm_state": "active",
+      "user_id": "5a77e2cf9b9f4fd78967e55e66ed5a41",
+      "name": "staticnat",
+      "progress": 0,
+      "OS-SRV-USG:launched_at": "2022-06-23T01:58:28.000000",
+      "updated": "2022-06-23T01:58:28Z",
+      "status": "ACTIVE"
+    },
+    {
+      "tenant_id": "c3d6ced17b1d45d98af60cbeff8f4bbd",
+      "metadata": {},
+      "addresses": {
+        "Private": [
+          {
+            "OS-EXT-IPS-MAC:mac_addr": "fa:16:3e:01:cd:f8",
+            "OS-EXT-IPS:type": "fixed",
+            "addr": "172.25.1.138",
+            "version": 4
+          }
+        ]
+      },
+      "OS-EXT-STS:task_state": null,
+      "description": null,
+      "OS-DCF:diskConfig": "MANUAL",
+      "trusted_image_certificates": null,
+      "OS-EXT-AZ:availability_zone": "DX-M1",
+      "links": [
+        {
+          "rel": "self",
+          "href": "https://10.10.73.20:13774/v2.1/servers/0b63874a-04dc-46f0-be95-e764ae38e5af"
+        },
+        {
+          "rel": "bookmark",
+          "href": "https://10.10.73.20:13774/servers/0b63874a-04dc-46f0-be95-e764ae38e5af"
+        }
+      ],
+      "OS-EXT-STS:power_state": 1,
+      "id": "0b63874a-04dc-46f0-be95-e764ae38e5af",
+      "os-extended-volumes:volumes_attached": [
+        {
+          "delete_on_termination": true,
+          "id": "f91add7e-5bf4-4bc7-87ba-18b476a92ab9"
+        }
+      ],
+      "locked": false,
+      "image": "",
+      "accessIPv4": "",
+      "OS-SRV-USG:terminated_at": null,
+      "accessIPv6": "",
+      "created": "2022-06-22T07:21:59Z",
+      "hostId": "c1b9e59572d572054490fb78e038a0b46d2a39215afd8297d7752f4e",
+      "tags": [
+        "server"
+      ],
+      "flavor": {
+        "disk": 0,
+        "swap": 0,
+        "original_name": "1x1.itl",
+        "extra_specs": {
+          "aggregate_instance_extra_specs:server_intel": "true"
+        },
+        "ephemeral": 0,
+        "vcpus": 1,
+        "ram": 1024
+      },
+      "key_name": "ssh_yh",
+      "security_groups": [
+        {
+          "name": "default"
+        }
+      ],
+      "config_drive": "",
+      "OS-EXT-STS:vm_state": "active",
+      "user_id": "5a77e2cf9b9f4fd78967e55e66ed5a41",
+      "name": "yh0copy",
+      "progress": 0,
+      "OS-SRV-USG:launched_at": "2022-06-22T07:24:44.000000",
+      "updated": "2022-06-22T07:24:44Z",
+      "status": "ACTIVE"
+    },
+    {
+      "tenant_id": "c3d6ced17b1d45d98af60cbeff8f4bbd",
+      "metadata": {},
+      "addresses": {
+        "Private": [
+          {
+            "OS-EXT-IPS-MAC:mac_addr": "fa:16:3e:af:fc:8b",
+            "OS-EXT-IPS:type": "fixed",
+            "addr": "172.25.1.100",
+            "version": 4
+          }
+        ]
+      },
+      "OS-EXT-STS:task_state": null,
+      "description": null,
+      "OS-DCF:diskConfig": "MANUAL",
+      "trusted_image_certificates": null,
+      "OS-EXT-AZ:availability_zone": "DX-M1",
+      "links": [
+        {
+          "rel": "self",
+          "href": "https://10.10.73.20:13774/v2.1/servers/193889a3-df77-4ecc-8310-8cd18ac29e43"
+        },
+        {
+          "rel": "bookmark",
+          "href": "https://10.10.73.20:13774/servers/193889a3-df77-4ecc-8310-8cd18ac29e43"
+        }
+      ],
+      "OS-EXT-STS:power_state": 1,
+      "id": "193889a3-df77-4ecc-8310-8cd18ac29e43",
+      "os-extended-volumes:volumes_attached": [
+        {
+          "delete_on_termination": true,
+          "id": "af599410-470c-47b6-b89d-89e32116bf31"
+        },
+        {
+          "delete_on_termination": false,
+          "id": "380409ef-9879-4278-af47-2cc255630a9c"
+        }
+      ],
+      "locked": false,
+      "image": "",
+      "accessIPv4": "",
+      "OS-SRV-USG:terminated_at": null,
+      "accessIPv6": "",
+      "created": "2022-06-17T02:21:21Z",
+      "hostId": "c1b9e59572d572054490fb78e038a0b46d2a39215afd8297d7752f4e",
+      "tags": [
+        "server"
+      ],
+      "flavor": {
+        "disk": 0,
+        "swap": 0,
+        "original_name": "4x4.itl",
+        "extra_specs": {
+          "hw:cpu_socket": "2",
+          "aggregate_instance_extra_specs:server_intel": "true",
+          "hw:cpu_cores": "2",
+          "hw:cpu_thread": "1"
+        },
+        "ephemeral": 0,
+        "vcpus": 4,
+        "ram": 4096
+      },
+      "key_name": "ssh_yh",
+      "security_groups": [
+        {
+          "name": "default"
+        }
+      ],
+      "config_drive": "",
+      "OS-EXT-STS:vm_state": "active",
+      "user_id": "5a77e2cf9b9f4fd78967e55e66ed5a41",
+      "name": "yh0",
+      "progress": 0,
+      "OS-SRV-USG:launched_at": "2022-06-22T07:54:24.000000",
+      "updated": "2022-06-22T07:54:24Z",
+      "status": "ACTIVE"
+    },
+    {
+      "tenant_id": "c3d6ced17b1d45d98af60cbeff8f4bbd",
+      "metadata": {},
+      "addresses": {
+        "Private": [
+          {
+            "OS-EXT-IPS-MAC:mac_addr": "fa:16:3e:fb:d7:99",
+            "OS-EXT-IPS:type": "fixed",
+            "addr": "172.25.1.9",
+            "version": 4
+          }
+        ]
+      },
+      "OS-EXT-STS:task_state": null,
+      "description": null,
+      "OS-DCF:diskConfig": "MANUAL",
+      "trusted_image_certificates": null,
+      "OS-EXT-AZ:availability_zone": "DX-M1",
+      "links": [
+        {
+          "rel": "self",
+          "href": "https://10.10.73.20:13774/v2.1/servers/9da8299c-a023-4b79-809a-c05c53f7e7d8"
+        },
+        {
+          "rel": "bookmark",
+          "href": "https://10.10.73.20:13774/servers/9da8299c-a023-4b79-809a-c05c53f7e7d8"
+        }
+      ],
+      "OS-EXT-STS:power_state": 1,
+      "id": "9da8299c-a023-4b79-809a-c05c53f7e7d8",
+      "os-extended-volumes:volumes_attached": [
+        {
+          "delete_on_termination": true,
+          "id": "05955cbe-92c8-4656-84c7-5946035280ae"
+        }
+      ],
+      "locked": false,
+      "image": "",
+      "accessIPv4": "",
+      "OS-SRV-USG:terminated_at": null,
+      "accessIPv6": "",
+      "created": "2022-06-09T01:31:54Z",
+      "hostId": "f76ca8b6693c3975fcace81a322f923142af8e4031adfb350ab050a3",
+      "tags": [
+        "server"
+      ],
+      "flavor": {
+        "disk": 0,
+        "swap": 0,
+        "original_name": "1x1.itl",
+        "extra_specs": {
+          "aggregate_instance_extra_specs:server_intel": "true"
+        },
+        "ephemeral": 0,
+        "vcpus": 1,
+        "ram": 1024
+      },
+      "key_name": "ssh_yh",
+      "security_groups": [
+        {
+          "name": "default"
+        }
+      ],
+      "config_drive": "",
+      "OS-EXT-STS:vm_state": "active",
+      "user_id": "5a77e2cf9b9f4fd78967e55e66ed5a41",
+      "name": "yh",
+      "progress": 0,
+      "OS-SRV-USG:launched_at": "2022-06-16T07:22:09.000000",
+      "updated": "2022-06-16T07:22:09Z",
+      "status": "ACTIVE"
+    }
+  ]
+}

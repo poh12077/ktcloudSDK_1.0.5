@@ -1,0 +1,1 @@
+curl -X DELETE "https://api.ucloudbiz.olleh.com/d1/nc/IpAddress/d8f27d1e-dd11-48d4-817c-553a8bfbdb6c" --header 'X-Auth-Token: gAAAAABix8YBV7T5aeeeCYr_81TRbTif2jWJR5D9_LvlL4Bmr7IlB6cGlEdAvlXlSYb1C8pfR3_4pqYQ-7vYRC9yZA52smvl_3WOiAQsKiJxcJu0kzWgjVZnEV7GnbOELfOwmYGE-90MA-rbj9JCeKZ7xrmBSeFXTT0SupAp3Iwz22pD10AaVu0' 

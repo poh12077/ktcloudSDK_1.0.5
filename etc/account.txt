@@ -1,0 +1,10 @@
+계정 : infra.op@solbox.com
+비밀번호 : xJd*Qv*cBXpd7qX
+
+계정 : edge2.ktcloud@solbox.com
+비밀번호 : xJd*Qv*cBXpd7qX
+
+
+bandwidth
+	g1, g2 : 2gbps 
+	d1: 2gbps 

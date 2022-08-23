@@ -1,0 +1,1 @@
+curl -X DELETE 'https://api.ucloudbiz.olleh.com/d1/server/servers/340436a1-44ad-41d9-bcfc-8b34c39dc826' --header 'X-Auth-Token: gAAAAABitR6Ra1Y-FFURWWayDdO6OVtV8R4FaSJoeAaMVLjKcqNcBzmppPTJucsxDlLRL-E1k0aZAMfZI_e1ZVMlyP8jTRyDvrKYad8lIDD6LVwdDRyC0NXswHRKbHqsV04jeBIAPf1d-B1w0FskJ1hlg7TM4UUbyP2YLszNSspT85KWMpTFBPk'

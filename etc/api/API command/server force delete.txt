@@ -1,0 +1,1 @@
+curl -X POST "https://api.ucloudbiz.olleh.com/d1/server/servers/6ab6936f-964b-4d04-bb3a-7c08f57f2dd2/action" --header 'X-Auth-Token: gAAAAABitWzIp0eCFErzzJ239DP5Gj2uQ7MxBE48SiGEdWjXfTrVwuZOyhg_N7AHhgz1FEc6kFjCX5nt9UGzwhiGIVSB35Tz99G7GwTzSWo63MyJPT1Soo9w-FN4w2qGppbTl7nkMmJZpU0v3ejkaagTACc_komCOOvAiRXnZT2l7A8ZEJ1F3bA' -H "Content-Type: application/json" -d '{"forceDelete": null}'
