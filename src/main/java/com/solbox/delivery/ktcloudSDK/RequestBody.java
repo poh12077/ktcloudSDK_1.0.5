@@ -5,7 +5,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 class RequestBody {
-	static String getVm(String name, String imageID, String specs) throws JSONException {
+	static String getVm(String name, String imageID, String specs, String networkId, String sshKeyName) throws JSONException {
 		JSONObject finalJsonObject = new JSONObject();
 		JSONObject server = new JSONObject();
 		JSONObject networks = new JSONObject();
@@ -14,10 +14,10 @@ class RequestBody {
 		JSONArray jsonArray1 = new JSONArray();
 
 		server.put("name", name);
-		server.put("key_name", "ssh_yh");
+		server.put("key_name", sshKeyName);
 		server.put("flavorRef", specs);
 		server.put("availability_zone", "DX-M1");
-		networks.put("uuid", "71655962-3e67-42d6-a17d-6ab61a435dfe");
+		networks.put("uuid", networkId);
 		jsonArray0.put(networks);
 		server.put("networks", jsonArray0);
 		block_device_mapping_v2.put("destination_type", "volume");

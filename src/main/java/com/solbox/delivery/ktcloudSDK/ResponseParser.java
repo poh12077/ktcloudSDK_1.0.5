@@ -74,11 +74,11 @@ class ResponseParser {
         return ID;
     }
 
-    static String VmDetailResponseParser(String response) throws JSONException {
+    static String VmDetailResponseParser(String response, String networkName) throws JSONException {
         JSONObject fianlJsonObject = new JSONObject(response);
         JSONObject server = fianlJsonObject.getJSONObject("server");
         JSONObject addresses = server.getJSONObject("addresses");
-        JSONArray Private = addresses.getJSONArray("Private");
+        JSONArray Private = addresses.getJSONArray(networkName);
         String privateIP = "";
         for (int i = 0; i < Private.length(); i++) {
             JSONObject jsonObject = Private.getJSONObject(i);
@@ -220,10 +220,10 @@ class ResponseParser {
 
 
 
-    static String lookupVmPrivateIp(String vmDetailUrl, String token, String vmId, int timeout) throws Exception {
+    static String lookupVmPrivateIp(String vmDetailUrl, String token, String vmId, String networkName, int timeout) throws Exception {
         String result = RestAPI.get(vmDetailUrl + vmId, token, timeout);
         String response = ResponseParser.statusCodeParser(result);
-        String vmPrivateIp = ResponseParser.VmDetailResponseParser(response);
+        String vmPrivateIp = ResponseParser.VmDetailResponseParser(response, networkName);
         Etc.check(vmPrivateIp);
         return vmPrivateIp;
     }

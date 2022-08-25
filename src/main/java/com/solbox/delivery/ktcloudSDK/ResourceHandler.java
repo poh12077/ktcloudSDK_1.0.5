@@ -16,8 +16,8 @@ class ResourceHandler {
 
     }
 
-    static String getVm(String getVmUrl, String token, String serverName, String vmImageId, String specs, int timeout) throws Exception {
-        String requestBody = RequestBody.getVm(serverName, vmImageId, specs);
+    static String getVm(String getVmUrl, String token, String serverName, String vmImageId, String specs, String networkId, String sshKeyName, int timeout) throws Exception {
+        String requestBody = RequestBody.getVm(serverName, vmImageId, specs, networkId, sshKeyName);
         String result = RestAPI.post(getVmUrl, token, requestBody, timeout);
         String response = ResponseParser.statusCodeParser(result);
         String vmId = ResponseParser.VmCreateResponseParser(response);
@@ -42,7 +42,7 @@ class ResourceHandler {
         String result = RestAPI.post(connectVmAndVolumeUrl + vmId + "/os-volume_attachments", token, requestBody, timeout);
         ResponseParser.statusCodeParser(result);
     }
-    static String getPublicIp(String getPublicIpUrl, String token, int timeout, int maximumWatingTimeGenerally, int requestCycle) throws Exception {
+    static String getPublicIp(String getPublicIpUrl, String token, int timeout, int ktServerTimeoutGenerally, int requestCycle) throws Exception {
         String publicIpJobId = "";
         String result = RestAPI.post(getPublicIpUrl, token, "", timeout);
         JSONObject fianlJsonObject = new JSONObject(result);
@@ -51,7 +51,7 @@ class ResourceHandler {
         JSONObject nc_associateentpublicipresponse = response.getJSONObject("nc_associateentpublicipresponse");
         if (nc_associateentpublicipresponse.has("job_id")) {
             publicIpJobId = ResponseParser.IPCreateResponseParser(responseString);
-            String publicIpId = ResponseParser.lookupPublicIpJobId(publicIpJobId,token,timeout,"public IP creation",maximumWatingTimeGenerally,requestCycle);
+            String publicIpId = ResponseParser.lookupPublicIpJobId(publicIpJobId,token,timeout,"public IP creation",ktServerTimeoutGenerally,requestCycle);
             Etc.check(publicIpId);
             return publicIpId;
         } else {
@@ -71,7 +71,7 @@ class ResourceHandler {
     }
 
     static String openFirewall(String openFirewallUrl, String token, String startPort, String endPort, String staticNatId, String sourceNetworkId,
-                               String destinationNetworkAddress, String protocol, String destinationNetworkId, int timeout, int maximumWatingTimeGenerally, int requestCycle ) throws Exception {
+                               String destinationNetworkAddress, String protocol, String destinationNetworkId, int timeout, int ktServerTimeoutGenerally, int requestCycle ) throws Exception {
         int count = 0;
         while (true) {
             String requestBody = RequestBody.openFirewall(startPort, endPort, staticNatId, sourceNetworkId, destinationNetworkAddress, protocol, destinationNetworkId);
@@ -79,7 +79,7 @@ class ResourceHandler {
             String response = ResponseParser.statusCodeParser(result);
             String firewallJobId = ResponseParser.firewallJobIdParser(response);
             Etc.check(firewallJobId);
-            boolean isFirewallOpened = ResponseParser.lookupJobId(firewallJobId, token, timeout, count,  "(port " + startPort + ") firewall activation", maximumWatingTimeGenerally, requestCycle);
+            boolean isFirewallOpened = ResponseParser.lookupJobId(firewallJobId, token, timeout, count,  "(port " + startPort + ") firewall activation", ktServerTimeoutGenerally, requestCycle);
             if (isFirewallOpened) {
                 return firewallJobId;
             }
@@ -87,7 +87,7 @@ class ResourceHandler {
             count++;
             Thread.sleep(requestCycle * 1000);
 
-            if (maximumWatingTimeGenerally <= count) {
+            if (ktServerTimeoutGenerally <= count) {
                 KTCloudOpenAPI.LOGGER.trace("(port " + startPort + ") firewall activation has failed");
                 throw new Exception();
             }
@@ -170,7 +170,7 @@ class ResourceHandler {
             while (true) {
                 String result = RestAPI.delete(KTCloudOpenAPI.deleteVolume_URL + projectID + "/volumes/" + volumeID, token,
                         timeout);
-                if (ResponseParser.statusCodeParserInDeletion(result, "VM has been deleted & volume deletion has started", "")) {
+                if (ResponseParser.statusCodeParserInDeletion(result, "volume deletion has started", "")) {
                     return true;
                 } else {
                     //System.out.print(count + " ");
