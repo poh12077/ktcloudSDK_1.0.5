@@ -95,7 +95,7 @@ public class Database {
 
 			
 		} catch (SQLException e) {
-			System.out.println("error: " + e);
+			System.out.println("failed: " + e);
 		} finally {
 			try {
 				if (rs != null) {

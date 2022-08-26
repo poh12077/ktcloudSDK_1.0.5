@@ -187,7 +187,7 @@ class ResponseParser {
             JSONObject nc_queryasyncjobresultresponse = fianlJsonObject.getJSONObject("nc_queryasyncjobresultresponse");
             int state = nc_queryasyncjobresultresponse.getInt("state");
             if (state == 1) {
-                KTCloudOpenAPI.LOGGER.trace(log + " has been done");
+                KTCloudOpenAPI.LOGGER.trace(log + " has succeeded");
                 return true;
             } else if (state == 0) {
                 //waiting for completion
@@ -199,7 +199,7 @@ class ResponseParser {
                 KTCloudOpenAPI.LOGGER.trace(deletionCount + " " + log + " failed");
                 return false;
             } else {
-                KTCloudOpenAPI.LOGGER.trace(log + " error");
+                KTCloudOpenAPI.LOGGER.trace(log + " failed");
                 return false;
             }
 
@@ -221,7 +221,7 @@ class ResponseParser {
             JSONObject nc_queryasyncjobresultresponse = fianlJsonObject.getJSONObject("nc_queryasyncjobresultresponse");
             int state = nc_queryasyncjobresultresponse.getInt("state");
             if (state == 1) {
-                KTCloudOpenAPI.LOGGER.trace(log + " has been done");
+                KTCloudOpenAPI.LOGGER.trace(log + " has succeeded");
                 JSONObject resultJson = nc_queryasyncjobresultresponse.getJSONObject("result");
                 String publicIpId = resultJson.getString("id");
                 return publicIpId;
@@ -234,7 +234,7 @@ class ResponseParser {
                 KTCloudOpenAPI.LOGGER.trace(log + " failed");
                 throw new Exception();
             } else {
-                KTCloudOpenAPI.LOGGER.trace(log + " error");
+                KTCloudOpenAPI.LOGGER.trace(log + " failed");
                 throw new Exception();
             }
 

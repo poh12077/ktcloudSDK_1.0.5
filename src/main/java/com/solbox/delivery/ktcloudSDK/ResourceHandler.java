@@ -41,6 +41,7 @@ class ResourceHandler {
         String requestBody = RequestBody.connectVmAndVolume(volumeId);
         String result = RestAPI.post(connectVmAndVolumeUrl + vmId + "/os-volume_attachments", token, requestBody, timeout);
         ResponseParser.statusCodeParser(result);
+        KTCloudOpenAPI.LOGGER.trace("connecting disk with VM has succeeded");
     }
     static String getPublicIp(String getPublicIpUrl, String token, int timeout, int resourceProcessingTimeoutBesideVm, int requestCycle) throws Exception {
         String publicIpJobId = "";
@@ -66,7 +67,7 @@ class ResourceHandler {
         String response = ResponseParser.statusCodeParser(result);
         String staticNatId = ResponseParser.staticNATSettingResponseParser(response);
         Etc.check(staticNatId);
-        KTCloudOpenAPI.LOGGER.trace("static NAT has been created");
+        KTCloudOpenAPI.LOGGER.trace("static NAT creation has succeeded");
         return staticNatId;
     }
 
@@ -83,7 +84,7 @@ class ResourceHandler {
         while (true) {
             String sourceNetworkId = getSourceNetworkId(openFirewallUrl, token, timeout);
             if(sourceNetworkId.equals("")){
-                KTCloudOpenAPI.LOGGER.trace("sourceNetwork ID is empty. check out the firewall outbound setting");
+                KTCloudOpenAPI.LOGGER.trace("firewall activation has failed, since sourceNetwork ID is empty. check out the firewall outbound setting");
                 throw new Exception();
             }
             String requestBody = RequestBody.openFirewall(startPort, endPort, staticNatId, sourceNetworkId, destinationNetworkAddress, protocol, destinationNetworkId);
@@ -116,7 +117,7 @@ class ResourceHandler {
             JSONObject server = fianlJsonObject.getJSONObject("server");
             int power_state = server.getInt("OS-EXT-STS:power_state");
             if (power_state == 1) {
-                KTCloudOpenAPI.LOGGER.trace("VM has been created");
+                KTCloudOpenAPI.LOGGER.trace("VM creation has succeeded");
                 return true;
             }
             Thread.sleep(requestCycle * 1000);
@@ -139,7 +140,7 @@ class ResourceHandler {
             JSONObject volume = fianlJsonObject.getJSONObject("volume");
             String status = volume.getString("status");
             if (status.equals("available")) {
-                KTCloudOpenAPI.LOGGER.trace("volume has been created");
+                KTCloudOpenAPI.LOGGER.trace("volume creation has succeeded");
                 return true;
             }
             Thread.sleep(requestCycle * 1000);
@@ -157,7 +158,7 @@ class ResourceHandler {
     static boolean deleteVmOnly(String serverID, String token, int timeout) {
         try {
             if (serverID.length() == 0) {
-                KTCloudOpenAPI.LOGGER.trace("no VM id");
+                KTCloudOpenAPI.LOGGER.trace("VM deletion failed, since no VM id");
                 return false;
             }
             String requestBody = RequestBody.forceDeleteVm();
@@ -174,7 +175,7 @@ class ResourceHandler {
     static boolean deleteVolume(String volumeID, String projectID, String token, int timeout, int maximumWaitingTime, int requestCycle) {
         try {
             if (volumeID.length() == 0) {
-                KTCloudOpenAPI.LOGGER.trace("no volume id");
+                KTCloudOpenAPI.LOGGER.trace("volume deletion has failed, since no volume id");
                 return false;
             }
             KTCloudOpenAPI.LOGGER.trace("volume deletion has started");
@@ -205,7 +206,7 @@ class ResourceHandler {
     static boolean deleteStaticNat(String staticNatId, String token, int timeout, int maximumWaitingTime, int requestCycle) {
         try {
             if (staticNatId.length() == 0) {
-                KTCloudOpenAPI.LOGGER.trace("no static nat id");
+                KTCloudOpenAPI.LOGGER.trace("static NAT activation has failed, since no static nat id");
                 return false;
             }
 
@@ -223,7 +224,7 @@ class ResourceHandler {
                         return true;
                     }
                 } else {
-                    KTCloudOpenAPI.LOGGER.trace(count + "static NAT deletion failed, since no job id");
+                    KTCloudOpenAPI.LOGGER.trace(count + "static NAT deletion has failed, since no job id");
                 }
 
                 count++;
@@ -244,7 +245,7 @@ class ResourceHandler {
                                   int requestCycle) {
         try {
             if (publicIpId.length() == 0) {
-                KTCloudOpenAPI.LOGGER.trace("no public ip id");
+                KTCloudOpenAPI.LOGGER.trace("public ip deletion has failed, since no public ip id");
                 return false;
             }
             int count = 0;
@@ -280,7 +281,7 @@ class ResourceHandler {
     static boolean closeFirewall(String firewallJobId, String token, int timeout, int maximumWaitingTime, int requestCycle) {
         try {
             if (firewallJobId.length() == 0) {
-                KTCloudOpenAPI.LOGGER.trace("no firewall job id");
+                KTCloudOpenAPI.LOGGER.trace("disabling firewall has failed, since no firewall job id");
                 return false;
             }
             int count = 0;

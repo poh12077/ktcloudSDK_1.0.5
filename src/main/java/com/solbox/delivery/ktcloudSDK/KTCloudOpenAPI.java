@@ -55,10 +55,10 @@ public class KTCloudOpenAPI {
             result = RestAPI.post(getToken_URL, RequestBody.getToken(accountId, accountPassword), timeout);
             String token = ResponseParser.statusCodeParser(result);
             Etc.check(token);
-            LOGGER.trace("token has been issued");
+            LOGGER.trace("token creation has been succeeded");
             String projectId = ResponseParser.getProjectIdFromToken(result);
             Etc.check(projectId);
-            LOGGER.trace("project id has been issued");
+            LOGGER.trace("project id creation has been succeeded");
             serverInformation.setProjectId(projectId);
             String vmId = ResourceHandler.getVm(getVm_URL, token, serverName, serverImage, specs, networkId, sshKeyName, timeout);
             serverInformation.setVmId(vmId);
@@ -69,7 +69,7 @@ public class KTCloudOpenAPI {
             if (isVmCreated) {
                 vmPrivateIp = ResponseParser.lookupVmPrivateIp(VmDetail_URL, token, vmId, networkName, timeout);
             } else {
-                LOGGER.trace("vm creation error");
+                LOGGER.trace("vm creation failed");
                 throw new Exception();
             }
             String staticNatId = ResourceHandler.setStaticNat(setStaticNAT_URL, token, networkId, vmPrivateIp, publicIpId, timeout);
@@ -81,14 +81,14 @@ public class KTCloudOpenAPI {
                     destinationNetworkAddress, protocol, destinationNetworkId, timeout, resourceProcessingTimeoutBesideVm, requestCycle);
             serverInformation.setFirewallJobIdOfOutputPort(firewallJobIdOfOutputPort);
 
-            LOGGER.trace("server has been created");
+            LOGGER.trace("server creation has succeeded");
             return serverInformation;
         } catch (Exception e) {
             LOGGER.trace(e.toString());
             LOGGER.trace("server creation failed");
             LOGGER.trace("rollback has been started");
             KTCloudOpenAPI.deleteServer(serverInformation, timeout, accountId, accountPassword, resourceProcessingTimeoutBesideVm);
-            LOGGER.trace("rollback has been done");
+            LOGGER.trace("rollback has finished");
             throw new Exception();
         }
     }
@@ -126,7 +126,7 @@ public class KTCloudOpenAPI {
             if (isVmCreated && isVolumeCreated) {
                 ResourceHandler.connectVmAndVolume(connectVmAndVolume_URL, token, vmId, volumeId, timeout);
             } else {
-                LOGGER.trace("vm or volume creation error");
+                LOGGER.trace("vm or volume creation failed");
                 throw new Exception();
             }
 
@@ -140,14 +140,14 @@ public class KTCloudOpenAPI {
                     destinationNetworkAddress, protocol, destinationNetworkId, timeout, resourceProcessingTimeoutBesideVm, requestCycle);
             serverInformation.setFirewallJobIdOfOutputPort(firewallJobIdOfOutputPort);
 
-            LOGGER.trace("server has been created");
+            LOGGER.trace("server creation has succeeded");
             return serverInformation;
         } catch (Exception e) {
             LOGGER.trace(e.toString());
             LOGGER.trace("server creation failed");
             LOGGER.trace("rollback has been started");
             KTCloudOpenAPI.deleteServer(serverInformation, timeout, accountId, accountPassword, resourceProcessingTimeoutBesideVm);
-            LOGGER.trace("rollback has been done");
+            LOGGER.trace("rollback has finished");
             throw new Exception();
         }
     }
@@ -168,7 +168,7 @@ public class KTCloudOpenAPI {
             String response = RestAPI.post(getToken_URL, RequestBody.getToken(accountId, accountPassword), timeout);
             String token = ResponseParser.statusCodeParser(response);
             Etc.check(token);
-            LOGGER.trace("token has been issued");
+            LOGGER.trace("token creation has been succeeded");
             isVmDeleleted = ResourceHandler.deleteVmOnly(serverInformation.getVmId(), token, timeout);
             isVolumeDeleleted = ResourceHandler.deleteVolume(serverInformation.getVolumeId(), serverInformation.getProjectId(), token, timeout, resourceProcessingTimeoutBesideVm, requestCycle);
             isFirewallOfInputPortCloseed = ResourceHandler.closeFirewall(serverInformation.getFirewallJobIdOfInputPort(), token, timeout, resourceProcessingTimeoutBesideVm, requestCycle);
@@ -176,7 +176,7 @@ public class KTCloudOpenAPI {
             isStaticNatDisabled = ResourceHandler.deleteStaticNat(serverInformation.getStaticNatId(), token, timeout, resourceProcessingTimeoutBesideVm, requestCycle);
             isPublicIpDeleleted = ResourceHandler.deletePublicIp(serverInformation.getPublicIpId(), token, timeout, resourceProcessingTimeoutBesideVm, requestCycle);
 
-            LOGGER.trace("server has been deleted");
+            LOGGER.trace("server deletion has succeeded");
 
             JSONObject result = new JSONObject();
             result.put("isVmDeleleted", isVmDeleleted);
@@ -209,6 +209,8 @@ public class KTCloudOpenAPI {
 //        JSONObject http = conf.getJSONObject("http");
 //        int timeout = http.getInt("timeout");
 
+        LOGGER.trace("initialization has started");
+
         String result;
         String response;
         result = RestAPI.request(getToken_URL, POST, RequestBody.getToken(accountId, accountPassword));
@@ -240,7 +242,7 @@ public class KTCloudOpenAPI {
         response = ResponseParser.statusCodeParser(result);
         Initialization.deleteAllVolume(response, token, projectID, timeout);
 
-        LOGGER.trace("initialization is done");
+        LOGGER.trace("initialization has finished");
     }
 
     static void lookup() throws Exception {
