@@ -33,7 +33,7 @@ class ResponseParser {
     static boolean statusCodeParserInDeletion(String result, String successLog, String failLog) throws Exception {
         JSONObject jsonResult = new JSONObject(result);
         if (400 <= jsonResult.getInt("statusCode") && jsonResult.getInt("statusCode") < 600) {
-            if(!failLog.equals("")) {
+            if (!failLog.equals("")) {
                 KTCloudOpenAPI.LOGGER.trace(failLog);
             }
             return false;
@@ -142,14 +142,43 @@ class ResponseParser {
         }
     }
 
+    static String parseFirewallList(String response) throws JSONException {
+
+        String sourceNetworkId = "";
+        JSONObject fianlJsonObject = new JSONObject(response);
+        JSONObject nc_listfirewallrulesresponse = fianlJsonObject.getJSONObject("nc_listfirewallrulesresponse");
+        JSONArray firewallrules = nc_listfirewallrulesresponse.getJSONArray("firewallrules");
+
+        for (int i = 0; i < firewallrules.length(); i++) {
+            JSONObject jsonObject0 = firewallrules.getJSONObject(i);
+            JSONArray acls = jsonObject0.getJSONArray("acls");
+            for (int j = 0; j < acls.length(); j++) {
+                JSONObject firewall = acls.getJSONObject(j);
+                JSONArray dstintfs = firewall.getJSONArray("dstintfs");
+                for (int k = 0; k < dstintfs.length(); k++) {
+                    JSONObject destinationNetwork = dstintfs.getJSONObject(k);
+                    String networkname = destinationNetwork.getString("networkname");
+                    if (networkname.equals("external")) {
+                        sourceNetworkId = destinationNetwork.getString("networkid");
+                        break;
+                    }
+                }
+                   if(0 < sourceNetworkId.length()) {break;}
+            }
+            if(0 < sourceNetworkId.length()) {break;}
+        }
+        return sourceNetworkId;
+    }
+
+
     static String lookupJobId(String jobId, String token, int timeout) throws Exception {
         String result = RestAPI.get(KTCloudOpenAPI.jobID_URL + jobId, token, timeout);
         String response = ResponseParser.statusCodeParser(result);
         return response;
     }
 
-    static boolean lookupJobId(String jobId, String token, int timeout, int deletionCount, String log, int maximumWaitingTime, int requestCycle ) throws Exception {
-        int waitingCount=0;
+    static boolean lookupJobId(String jobId, String token, int timeout, int deletionCount, String log, int maximumWaitingTime, int requestCycle) throws Exception {
+        int waitingCount = 0;
 
         while (true) {
             String result = RestAPI.get(KTCloudOpenAPI.jobID_URL + jobId, token, timeout);
@@ -175,15 +204,15 @@ class ResponseParser {
             }
 
             if (maximumWaitingTime <= waitingCount) {
-                KTCloudOpenAPI.LOGGER.trace(log+" failed");
+                KTCloudOpenAPI.LOGGER.trace(log + " failed");
                 return false;
             }
 
         }
     }
 
-    static String lookupPublicIpJobId(String jobId, String token, int timeout, String log, int maximumWaitingTime, int requestCycle ) throws Exception {
-        int waitingCount=0;
+    static String lookupPublicIpJobId(String jobId, String token, int timeout, String log, int maximumWaitingTime, int requestCycle) throws Exception {
+        int waitingCount = 0;
 
         while (true) {
             String result = RestAPI.get(KTCloudOpenAPI.jobID_URL + jobId, token, timeout);
@@ -210,14 +239,12 @@ class ResponseParser {
             }
 
             if (maximumWaitingTime <= waitingCount) {
-                KTCloudOpenAPI.LOGGER.trace(log+" failed");
+                KTCloudOpenAPI.LOGGER.trace(log + " failed");
                 throw new Exception();
             }
 
         }
     }
-
-
 
 
     static String lookupVmPrivateIp(String vmDetailUrl, String token, String vmId, String networkName, int timeout) throws Exception {

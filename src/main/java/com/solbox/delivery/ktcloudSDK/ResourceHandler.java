@@ -42,7 +42,7 @@ class ResourceHandler {
         String result = RestAPI.post(connectVmAndVolumeUrl + vmId + "/os-volume_attachments", token, requestBody, timeout);
         ResponseParser.statusCodeParser(result);
     }
-    static String getPublicIp(String getPublicIpUrl, String token, int timeout, int ktServerTimeoutGenerally, int requestCycle) throws Exception {
+    static String getPublicIp(String getPublicIpUrl, String token, int timeout, int resourceProcessingTimeoutBesideVm, int requestCycle) throws Exception {
         String publicIpJobId = "";
         String result = RestAPI.post(getPublicIpUrl, token, "", timeout);
         JSONObject fianlJsonObject = new JSONObject(result);
@@ -51,7 +51,7 @@ class ResourceHandler {
         JSONObject nc_associateentpublicipresponse = response.getJSONObject("nc_associateentpublicipresponse");
         if (nc_associateentpublicipresponse.has("job_id")) {
             publicIpJobId = ResponseParser.IPCreateResponseParser(responseString);
-            String publicIpId = ResponseParser.lookupPublicIpJobId(publicIpJobId,token,timeout,"public IP creation",ktServerTimeoutGenerally,requestCycle);
+            String publicIpId = ResponseParser.lookupPublicIpJobId(publicIpJobId,token,timeout,"public IP creation",resourceProcessingTimeoutBesideVm,requestCycle);
             Etc.check(publicIpId);
             return publicIpId;
         } else {
@@ -70,16 +70,28 @@ class ResourceHandler {
         return staticNatId;
     }
 
-    static String openFirewall(String openFirewallUrl, String token, String startPort, String endPort, String staticNatId, String sourceNetworkId,
-                               String destinationNetworkAddress, String protocol, String destinationNetworkId, int timeout, int ktServerTimeoutGenerally, int requestCycle ) throws Exception {
+   static String getSourceNetworkId(String firewallUrl, String token, int timeout) throws Exception {
+        String result = RestAPI.get(firewallUrl,token,timeout);
+        String response = ResponseParser.statusCodeParser(result);
+        String sourceNetworkId = ResponseParser.parseFirewallList(response);
+        return sourceNetworkId;
+    }
+    static String openFirewall(String openFirewallUrl, String token, String startPort, String endPort, String staticNatId,
+                               String destinationNetworkAddress, String protocol, String destinationNetworkId, int timeout,
+                               int resourceProcessingTimeoutBesideVm, int requestCycle ) throws Exception {
         int count = 0;
         while (true) {
+            String sourceNetworkId = getSourceNetworkId(openFirewallUrl, token, timeout);
+            if(sourceNetworkId.equals("")){
+                KTCloudOpenAPI.LOGGER.trace("sourceNetwork ID is empty. check out the firewall outbound setting");
+                throw new Exception();
+            }
             String requestBody = RequestBody.openFirewall(startPort, endPort, staticNatId, sourceNetworkId, destinationNetworkAddress, protocol, destinationNetworkId);
             String result = RestAPI.post(openFirewallUrl, token, requestBody, timeout);
             String response = ResponseParser.statusCodeParser(result);
             String firewallJobId = ResponseParser.firewallJobIdParser(response);
             Etc.check(firewallJobId);
-            boolean isFirewallOpened = ResponseParser.lookupJobId(firewallJobId, token, timeout, count,  "(port " + startPort + ") firewall activation", ktServerTimeoutGenerally, requestCycle);
+            boolean isFirewallOpened = ResponseParser.lookupJobId(firewallJobId, token, timeout, count,  "(port " + startPort + ") firewall activation", resourceProcessingTimeoutBesideVm, requestCycle);
             if (isFirewallOpened) {
                 return firewallJobId;
             }
@@ -87,7 +99,7 @@ class ResourceHandler {
             count++;
             Thread.sleep(requestCycle * 1000);
 
-            if (ktServerTimeoutGenerally <= count) {
+            if (resourceProcessingTimeoutBesideVm <= count) {
                 KTCloudOpenAPI.LOGGER.trace("(port " + startPort + ") firewall activation has failed");
                 throw new Exception();
             }
