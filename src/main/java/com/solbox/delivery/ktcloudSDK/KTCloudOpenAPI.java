@@ -55,7 +55,7 @@ public class KTCloudOpenAPI {
             result = RestAPI.post(getToken_URL, RequestBody.getToken(accountId, accountPassword), timeout);
             String token = ResponseParser.statusCodeParser(result);
             Etc.check(token);
-            LOGGER.trace("token creation has been succeeded");
+            LOGGER.trace("token creation has succeeded");
             String projectId = ResponseParser.getProjectIdFromToken(result);
             Etc.check(projectId);
             LOGGER.trace("project id creation has been succeeded");
@@ -86,7 +86,7 @@ public class KTCloudOpenAPI {
         } catch (Exception e) {
             LOGGER.trace(e.toString());
             LOGGER.trace("server creation failed");
-            LOGGER.trace("rollback has been started");
+            LOGGER.trace("rollback has started");
             KTCloudOpenAPI.deleteServer(serverInformation, timeout, accountId, accountPassword, resourceProcessingTimeoutBesideVm);
             LOGGER.trace("rollback has finished");
             throw new Exception();
@@ -145,7 +145,7 @@ public class KTCloudOpenAPI {
         } catch (Exception e) {
             LOGGER.trace(e.toString());
             LOGGER.trace("server creation failed");
-            LOGGER.trace("rollback has been started");
+            LOGGER.trace("rollback has started");
             KTCloudOpenAPI.deleteServer(serverInformation, timeout, accountId, accountPassword, resourceProcessingTimeoutBesideVm);
             LOGGER.trace("rollback has finished");
             throw new Exception();
@@ -168,7 +168,7 @@ public class KTCloudOpenAPI {
             String response = RestAPI.post(getToken_URL, RequestBody.getToken(accountId, accountPassword), timeout);
             String token = ResponseParser.statusCodeParser(response);
             Etc.check(token);
-            LOGGER.trace("token creation has been succeeded");
+            LOGGER.trace("token creation has succeeded");
             isVmDeleleted = ResourceHandler.deleteVmOnly(serverInformation.getVmId(), token, timeout);
             isVolumeDeleleted = ResourceHandler.deleteVolume(serverInformation.getVolumeId(), serverInformation.getProjectId(), token, timeout, resourceProcessingTimeoutBesideVm, requestCycle);
             isFirewallOfInputPortCloseed = ResourceHandler.closeFirewall(serverInformation.getFirewallJobIdOfInputPort(), token, timeout, resourceProcessingTimeoutBesideVm, requestCycle);

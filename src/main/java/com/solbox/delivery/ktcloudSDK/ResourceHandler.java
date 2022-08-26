@@ -178,7 +178,6 @@ class ResourceHandler {
                 KTCloudOpenAPI.LOGGER.trace("volume deletion has failed, since no volume id");
                 return false;
             }
-            KTCloudOpenAPI.LOGGER.trace("volume deletion has started");
             int count = 0;
             while (true) {
                 String result = RestAPI.delete(KTCloudOpenAPI.deleteVolume_URL + projectID + "/volumes/" + volumeID, token,
