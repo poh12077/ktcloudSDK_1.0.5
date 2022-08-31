@@ -27,7 +27,7 @@ class Initialization {
 			JSONObject Vm = servers.getJSONObject(i);
 			String VmId = Vm.getString("id");
 			String requestBody=RequestBody.forceDeleteVm();
-			RestAPI.request(KTCloudOpenAPI.forceDeleteVm_URL+VmId+"/action" , KTCloudOpenAPI.POST, token, requestBody );
+			RestAPI.request(KTCloudOpenAPI.vmForceDeleteUrl+VmId+"/action" , KTCloudOpenAPI.POST, token, requestBody );
 		}
 	}
 

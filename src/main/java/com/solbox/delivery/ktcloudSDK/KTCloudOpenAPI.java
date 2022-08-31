@@ -9,14 +9,14 @@ public class KTCloudOpenAPI {
     static Logger LOGGER = LoggerFactory.getLogger(KTCloudOpenAPI.class);
 
     static final String getVm_URL = "https://api.ucloudbiz.olleh.com/d1/server/servers";
-    static final String forceDeleteVm_URL = "https://api.ucloudbiz.olleh.com/d1/server/servers/";
-    static final String VmList_URL = "https://api.ucloudbiz.olleh.com/d1/server/servers/detail";
+    static final String vmForceDeleteUrl = "https://api.ucloudbiz.olleh.com/d1/server/servers/";
+    static final String vmListUrl = "https://api.ucloudbiz.olleh.com/d1/server/servers/detail";
     static final String VmDetail_URL = "https://api.ucloudbiz.olleh.com/d1/server/servers/";
 
     static final String getVolume_URL = "https://api.ucloudbiz.olleh.com/d1/volume/";
     static String volumeStatusCheck = "https://api.ucloudbiz.olleh.com/d1/volume/";
     static final String connectVmAndVolume_URL = "https://api.ucloudbiz.olleh.com/d1/server/servers/";
-    static final String deleteAllVolume_URL = "https://api.ucloudbiz.olleh.com/d1/volume/";
+    static final String listOfAllVolumeUrl = "https://api.ucloudbiz.olleh.com/d1/volume/";
     static final String deleteVolume_URL = "https://api.ucloudbiz.olleh.com/d1/volume/";
     static final String getIP_URL = "https://api.ucloudbiz.olleh.com/d1/nc/IpAddress";
     static final String deleteIP_URL = "https://api.ucloudbiz.olleh.com/d1/nc/IpAddress/";
@@ -169,7 +169,8 @@ public class KTCloudOpenAPI {
             String token = ResponseParser.statusCodeParser(response);
             Etc.check(token);
             LOGGER.trace("token creation has succeeded");
-            isVmDeleleted = ResourceHandler.deleteVmOnly(serverInformation.getVmId(), token, timeout);
+            isVmDeleleted = ResourceHandler.deleteVmOnly(vmForceDeleteUrl, vmListUrl, serverInformation.getVmId(), token, timeout, resourceProcessingTimeoutBesideVm, requestCycle);
+
             isVolumeDeleleted = ResourceHandler.deleteVolume(serverInformation.getVolumeId(), serverInformation.getProjectId(), token, timeout, resourceProcessingTimeoutBesideVm, requestCycle);
             isFirewallOfInputPortCloseed = ResourceHandler.closeFirewall(serverInformation.getFirewallJobIdOfInputPort(), token, timeout, resourceProcessingTimeoutBesideVm, requestCycle);
             isFirewallOfOutputPortCloseed = ResourceHandler.closeFirewall(serverInformation.getFirewallJobIdOfOutputPort(), token, timeout, resourceProcessingTimeoutBesideVm, requestCycle);
@@ -233,12 +234,12 @@ public class KTCloudOpenAPI {
         Initialization.deleteAllIP(response, token);
 
         // delete vm
-        result = RestAPI.request(VmList_URL, GET, token, "");
+        result = RestAPI.request(vmListUrl, GET, token, "");
         response = ResponseParser.statusCodeParser(result);
         Initialization.deleteAllVm(response, token);
 
         //delete volume
-        result = RestAPI.get(deleteAllVolume_URL + projectID + "/volumes/detail", token, timeout);
+        result = RestAPI.get(listOfAllVolumeUrl + projectID + "/volumes/detail", token, timeout);
         response = ResponseParser.statusCodeParser(result);
         Initialization.deleteAllVolume(response, token, projectID, timeout);
 

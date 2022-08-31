@@ -43,6 +43,7 @@ class ResourceHandler {
         ResponseParser.statusCodeParser(result);
         KTCloudOpenAPI.LOGGER.trace("connecting disk with VM has succeeded");
     }
+
     static String getPublicIp(String getPublicIpUrl, String token, int timeout, int resourceProcessingTimeoutBesideVm, int requestCycle) throws Exception {
         String publicIpJobId = "";
         String result = RestAPI.post(getPublicIpUrl, token, "", timeout);
@@ -52,7 +53,7 @@ class ResourceHandler {
         JSONObject nc_associateentpublicipresponse = response.getJSONObject("nc_associateentpublicipresponse");
         if (nc_associateentpublicipresponse.has("job_id")) {
             publicIpJobId = ResponseParser.IPCreateResponseParser(responseString);
-            String publicIpId = ResponseParser.lookupPublicIpJobId(publicIpJobId,token,timeout,"public IP creation",resourceProcessingTimeoutBesideVm,requestCycle);
+            String publicIpId = ResponseParser.lookupPublicIpJobId(publicIpJobId, token, timeout, "public IP creation", resourceProcessingTimeoutBesideVm, requestCycle);
             Etc.check(publicIpId);
             return publicIpId;
         } else {
@@ -71,19 +72,20 @@ class ResourceHandler {
         return staticNatId;
     }
 
-   static String getSourceNetworkId(String firewallUrl, String token, int timeout) throws Exception {
-        String result = RestAPI.get(firewallUrl,token,timeout);
+    static String getSourceNetworkId(String firewallUrl, String token, int timeout) throws Exception {
+        String result = RestAPI.get(firewallUrl, token, timeout);
         String response = ResponseParser.statusCodeParser(result);
         String sourceNetworkId = ResponseParser.parseFirewallList(response);
         return sourceNetworkId;
     }
+
     static String openFirewall(String openFirewallUrl, String token, String startPort, String endPort, String staticNatId,
                                String destinationNetworkAddress, String protocol, String destinationNetworkId, int timeout,
-                               int resourceProcessingTimeoutBesideVm, int requestCycle ) throws Exception {
+                               int resourceProcessingTimeoutBesideVm, int requestCycle) throws Exception {
         int count = 0;
         while (true) {
             String sourceNetworkId = getSourceNetworkId(openFirewallUrl, token, timeout);
-            if(sourceNetworkId.equals("")){
+            if (sourceNetworkId.equals("")) {
                 KTCloudOpenAPI.LOGGER.trace("firewall activation has failed, since sourceNetwork ID is empty. check out the firewall outbound setting");
                 throw new Exception();
             }
@@ -92,7 +94,7 @@ class ResourceHandler {
             String response = ResponseParser.statusCodeParser(result);
             String firewallJobId = ResponseParser.firewallJobIdParser(response);
             Etc.check(firewallJobId);
-            boolean isFirewallOpened = ResponseParser.lookupJobId(firewallJobId, token, timeout, count,  "(port " + startPort + ") firewall activation", resourceProcessingTimeoutBesideVm, requestCycle);
+            boolean isFirewallOpened = ResponseParser.lookupJobId(firewallJobId, token, timeout, count, "(port " + startPort + ") firewall activation", resourceProcessingTimeoutBesideVm, requestCycle);
             if (isFirewallOpened) {
                 return firewallJobId;
             }
@@ -130,6 +132,39 @@ class ResourceHandler {
         }
     }
 
+    static boolean checkVmDeletionStatus(String vmListUrl, String token, String vmId, int timeout, int maximumWaitingTime, int requestCycle) throws Exception {
+        //KTCloudOpenAPI.LOGGER.trace("VM creation is in progress ");
+        int count = 0;
+        while (true) {
+            String result = RestAPI.get(vmListUrl, token, timeout);
+            String response = ResponseParser.statusCodeParser(result);
+            JSONObject fianlJsonObject = new JSONObject(response);
+            JSONArray servers = fianlJsonObject.getJSONArray("servers");
+            if (servers.length() == 0) {
+                KTCloudOpenAPI.LOGGER.trace("VM deletion has succeeded");
+                return true;
+            }
+            for (int i = 0; i < servers.length(); i++) {
+                JSONObject server = servers.getJSONObject(i);
+                String vmIdinTheCloud = server.getString("id");
+                if (vmIdinTheCloud.equals(vmId)) {
+                    KTCloudOpenAPI.LOGGER.trace("VM deletion is in progress");
+                    break;
+                }
+                if (i == servers.length() - 1) {
+                    KTCloudOpenAPI.LOGGER.trace("VM deletion has succeeded");
+                    return true;
+                }
+            }
+            Thread.sleep(requestCycle * 1000);
+            count++;
+            if (maximumWaitingTime <= count) {
+                return false;
+            }
+        }
+    }
+
+
     static boolean checkVolumeCreationStatus(String volumeStatusCheck, String token, String volumeId, String projectId, int timeout, int maximumWaitingTime, int requestCycle) throws Exception {
         //KTCloudOpenAPI.LOGGER.trace("volume creation is in progress ");
         int count = 0;
@@ -155,16 +190,18 @@ class ResourceHandler {
     }
 
 
-    static boolean deleteVmOnly(String serverID, String token, int timeout) {
+    static boolean deleteVmOnly(String vmForceDeleteUrl, String vmListUrl, String serverID, String token, int timeout, int resourceProcessingTimeoutBesideVm, int requestCycle) {
         try {
             if (serverID.length() == 0) {
                 KTCloudOpenAPI.LOGGER.trace("VM deletion failed, since no VM id");
                 return false;
             }
             String requestBody = RequestBody.forceDeleteVm();
-            String result = RestAPI.post(KTCloudOpenAPI.forceDeleteVm_URL + serverID + "/action", token, requestBody,
+            String result = RestAPI.post(vmForceDeleteUrl + serverID + "/action", token, requestBody,
                     timeout);
-            return ResponseParser.statusCodeParserInDeletion(result, "VM deletion has started", "VM deletion failed");
+            ResponseParser.statusCodeParserInDeletion(result, "VM deletion has started", "VM deletion failed");
+            return checkVmDeletionStatus(vmListUrl, token, serverID, timeout, resourceProcessingTimeoutBesideVm, requestCycle);
+
         } catch (Exception e) {
             KTCloudOpenAPI.LOGGER.trace("VM deletion failed");
             KTCloudOpenAPI.LOGGER.trace(e.toString());
