@@ -242,8 +242,6 @@ public class KTCloudOpenAPI {
         response = ResponseParser.statusCodeParser(result);
         Initialization.deleteAllVolume(response, token, projectID, timeout);
 
-//        String firewallJobIdOfInputPort = ResourceHandler.openFirewall(firewallUrl, token, 0, 65535, staticNatId,
-//                destinationNetworkAddress, protocol, destinationNetworkId, timeout, resourceProcessingTimeoutBesideVm, requestCycle);
 
         LOGGER.trace("initialization has finished");
     }
