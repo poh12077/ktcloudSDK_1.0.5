@@ -1,5 +1,6 @@
 package com.solbox.delivery.ktcloudSDK;
 
+import com.sun.org.apache.regexp.internal.RE;
 import org.json.JSONObject;
 
 import java.net.HttpURLConnection;
@@ -127,13 +128,13 @@ class ResourceHandler {
             //KTCloudOpenAPI.LOGGER.trace("timer "+count);
 
             if (maximumWaitingTime <= count) {
+                KTCloudOpenAPI.LOGGER.trace("VM creation has failed, because of vm creation timeout");
                 return false;
             }
         }
     }
 
     static boolean checkVmDeletionStatus(String vmListUrl, String token, String vmId, int timeout, int maximumWaitingTime, int requestCycle) throws Exception {
-        //KTCloudOpenAPI.LOGGER.trace("VM creation is in progress ");
         int count = 0;
         while (true) {
             String result = RestAPI.get(vmListUrl, token, timeout);
@@ -159,6 +160,40 @@ class ResourceHandler {
             Thread.sleep(requestCycle * 1000);
             count++;
             if (maximumWaitingTime <= count) {
+                KTCloudOpenAPI.LOGGER.trace("VM deletion has failed, because of vm deletion timeout");
+                return false;
+            }
+        }
+    }
+
+    static boolean checkVolumeDeletionStatus(String listOfAllVolumeUrl, String token, String volumeId, String projectID,
+                                             int timeout, int maximumWaitingTime, int requestCycle) throws Exception {
+        int count = 0;
+        while (true) {
+            String result = RestAPI.get(listOfAllVolumeUrl + projectID + "/volumes/detail", token, timeout);
+            String response = ResponseParser.statusCodeParser(result);
+            JSONObject fianlJsonObject = new JSONObject(response);
+            JSONArray volumes = fianlJsonObject.getJSONArray("volumes");
+            if (volumes.length() == 0) {
+                KTCloudOpenAPI.LOGGER.trace("volume deletion has succeeded");
+                return true;
+            }
+            for (int i = 0; i < volumes.length(); i++) {
+                JSONObject volume = volumes.getJSONObject(i);
+                String volumeIdInTheCloud = volume.getString("id");
+                if (volumeIdInTheCloud.equals(volumeId)) {
+                    KTCloudOpenAPI.LOGGER.trace("volume deletion is in progress");
+                    break;
+                }
+                if (i == volumes.length() - 1) {
+                    KTCloudOpenAPI.LOGGER.trace("volume deletion has succeeded");
+                    return true;
+                }
+            }
+            Thread.sleep(requestCycle * 1000);
+            count++;
+            if (maximumWaitingTime <= count) {
+                KTCloudOpenAPI.LOGGER.trace("volume deletion has failed, because of volume deletion timeout");
                 return false;
             }
         }
@@ -184,13 +219,15 @@ class ResourceHandler {
 
 
             if (maximumWaitingTime <= count) {
+                KTCloudOpenAPI.LOGGER.trace("volume creation has failed, because of resource processing timeout ");
                 return false;
             }
         }
     }
 
 
-    static boolean deleteVmOnly(String vmForceDeleteUrl, String vmListUrl, String serverID, String token, int timeout, int resourceProcessingTimeoutBesideVm, int requestCycle) {
+    static boolean deleteVmOnly(String vmForceDeleteUrl, String vmListUrl, String serverID, String token, int timeout,
+                                int resourceProcessingTimeoutBesideVm, int requestCycle) {
         try {
             if (serverID.length() == 0) {
                 KTCloudOpenAPI.LOGGER.trace("VM deletion failed, since no VM id");
@@ -199,8 +236,14 @@ class ResourceHandler {
             String requestBody = RequestBody.forceDeleteVm();
             String result = RestAPI.post(vmForceDeleteUrl + serverID + "/action", token, requestBody,
                     timeout);
-            ResponseParser.statusCodeParserInDeletion(result, "VM deletion has started", "VM deletion failed");
-            return checkVmDeletionStatus(vmListUrl, token, serverID, timeout, resourceProcessingTimeoutBesideVm, requestCycle);
+            Boolean isStatusCodeSuccess = ResponseParser.statusCodeParserInDeletion(result, "VM deletion has started", "VM deletion failed");
+            if (isStatusCodeSuccess == true) {
+                boolean isVmDeleted = checkVmDeletionStatus(vmListUrl, token, serverID, timeout, resourceProcessingTimeoutBesideVm, requestCycle);
+                return isVmDeleted;
+            } else {
+                boolean isVmDeleted = false;
+                return isVmDeleted;
+            }
 
         } catch (Exception e) {
             KTCloudOpenAPI.LOGGER.trace("VM deletion failed");
@@ -209,7 +252,8 @@ class ResourceHandler {
         }
     }
 
-    static boolean deleteVolume(String volumeID, String projectID, String token, int timeout, int maximumWaitingTime, int requestCycle) {
+    static boolean deleteVolume(String volumeDeleteUrl, String listOfAllVolumeUrl, String volumeID, String projectID,
+                                String token, int timeout, int maximumWaitingTime, int requestCycle) {
         try {
             if (volumeID.length() == 0) {
                 KTCloudOpenAPI.LOGGER.trace("volume deletion has failed, since no volume id");
@@ -217,18 +261,19 @@ class ResourceHandler {
             }
             int count = 0;
             while (true) {
-                String result = RestAPI.delete(KTCloudOpenAPI.deleteVolume_URL + projectID + "/volumes/" + volumeID, token,
+                String result = RestAPI.delete(volumeDeleteUrl + projectID + "/volumes/" + volumeID, token,
                         timeout);
-                if (ResponseParser.statusCodeParserInDeletion(result, "volume deletion has started", "")) {
-                    return true;
-                } else {
-                    //System.out.print(count + " ");
+                boolean isStatusCodeSuccess = ResponseParser.statusCodeParserInDeletion(result, "volume deletion has started", "");
+                if (isStatusCodeSuccess == true) {
+                    boolean isVolumeDeleted = checkVolumeDeletionStatus(listOfAllVolumeUrl, token, volumeID, projectID,
+                            timeout, maximumWaitingTime, requestCycle);
+                    return isVolumeDeleted;
                 }
                 count++;
                 Thread.sleep(requestCycle * 1000);
 
                 if (maximumWaitingTime <= count) {
-                    KTCloudOpenAPI.LOGGER.trace("volume deletion failed");
+                    KTCloudOpenAPI.LOGGER.trace("volume deletion failed, because of resource processing timeout");
                     return false;
                 }
             }
@@ -267,7 +312,7 @@ class ResourceHandler {
                 Thread.sleep(requestCycle * 1000);
 
                 if (maximumWaitingTime <= count) {
-                    KTCloudOpenAPI.LOGGER.trace("static NAT deletion has failed");
+                    KTCloudOpenAPI.LOGGER.trace("static NAT deletion has failed, because of resource processing timeout");
                     return false;
                 }
             }
@@ -304,7 +349,7 @@ class ResourceHandler {
                 Thread.sleep(requestCycle * 1000);
 
                 if (maximumWaitingTime <= count) {
-                    KTCloudOpenAPI.LOGGER.trace("public IP deletion has failed");
+                    KTCloudOpenAPI.LOGGER.trace("public IP deletion has failed, because of resource processing timeout");
                     return false;
                 }
             }
@@ -338,7 +383,7 @@ class ResourceHandler {
                 Thread.sleep(requestCycle * 1000);
 
                 if (maximumWaitingTime <= count) {
-                    KTCloudOpenAPI.LOGGER.trace("disabling firewall has failed");
+                    KTCloudOpenAPI.LOGGER.trace("disabling firewall has failed, because of resource processing timeout");
                     return false;
                 }
             }

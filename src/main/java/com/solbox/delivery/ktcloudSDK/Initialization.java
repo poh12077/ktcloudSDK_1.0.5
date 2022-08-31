@@ -13,7 +13,7 @@ class Initialization {
 		for (int i = 0; i < volumes.length(); i++) {
 			JSONObject volume = volumes.getJSONObject(i);
 			String volumeId = volume.getString("id");
-			RestAPI.delete(KTCloudOpenAPI.deleteVolume_URL+projectId+"/volumes/"+volumeId, token, timeout );
+			RestAPI.delete(KTCloudOpenAPI.volumeDeleteUrl+projectId+"/volumes/"+volumeId, token, timeout );
 			//Utils.deleteVolume(volumeId, projectId, token, KTCloudOpenAPI.timeout);
 		}
 	}
