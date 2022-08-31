@@ -29,7 +29,7 @@ public class KTCloudOpenAPI {
     static final String firewallUrl = "https://api.ucloudbiz.olleh.com/d1/nc/Firewall";
     static final String closeFirewall_URL = "https://api.ucloudbiz.olleh.com/d1/nc/Firewall/";
 
-    static final String getToken_URL = "https://api.ucloudbiz.olleh.com/d1/identity/auth/tokens";
+    static final String tokenIssuaceUrl = "https://api.ucloudbiz.olleh.com/d1/identity/auth/tokens";
     static final String jobID_URL = "https://api.ucloudbiz.olleh.com/d1/nc/Etc?command=queryAsyncJob&jobid=";
 
     static final String GET = "GET";
@@ -42,23 +42,16 @@ public class KTCloudOpenAPI {
         ServerInformation serverInformation = new ServerInformation();
 
         try {
-            String result;
             String protocol = "ALL";
             String inputPort = "1935";
             String outputPort = "80";
             int requestCycle = 1;
 
             LOGGER.trace("Server creation has started");
-
             serverInformation.setNetworkId(networkId);
-            // token
-            result = RestAPI.post(getToken_URL, RequestBody.getToken(accountId, accountPassword), timeout);
-            String token = ResponseParser.statusCodeParser(result);
-            Etc.check(token);
-            LOGGER.trace("token creation has succeeded");
-            String projectId = ResponseParser.getProjectIdFromToken(result);
-            Etc.check(projectId);
-            LOGGER.trace("project id creation has been succeeded");
+            TokenResponse tokenResponse = ResourceHandler.getToken(tokenIssuaceUrl, accountId, accountPassword, timeout);
+            String token = tokenResponse.getToken();
+            String projectId = tokenResponse.getProjectId();
             serverInformation.setProjectId(projectId);
             String vmId = ResourceHandler.getVm(getVm_URL, token, serverName, serverImage, specs, networkId, sshKeyName, timeout);
             serverInformation.setVmId(vmId);
@@ -98,21 +91,16 @@ public class KTCloudOpenAPI {
                                                  int vmCreationTimeout, int resourceProcessingTimeoutBesideVm) throws Exception {
         ServerInformation serverInformation = new ServerInformation();
         try {
-            String result;
             String protocol = "ALL";
             String inputPort = "1935";
             String outputPort = "80";
             int requestCycle = 1;
 
             LOGGER.trace("Server creation has started");
-
             serverInformation.setNetworkId(networkId);
-            // token
-            result = RestAPI.post(getToken_URL, RequestBody.getToken(accountId, accountPassword), timeout);
-            String token = ResponseParser.statusCodeParser(result);
-            Etc.check(token);
-            String projectId = ResponseParser.getProjectIdFromToken(result);
-            Etc.check(projectId);
+            TokenResponse tokenResponse = ResourceHandler.getToken(tokenIssuaceUrl, accountId, accountPassword, timeout);
+            String token = tokenResponse.getToken();
+            String projectId = tokenResponse.getProjectId();
             serverInformation.setProjectId(projectId);
             String vmId = ResourceHandler.getVm(getVm_URL, token, serverName, serverImage, specs, networkId, sshKeyName, timeout);
             serverInformation.setVmId(vmId);
@@ -164,11 +152,8 @@ public class KTCloudOpenAPI {
 
         try {
             LOGGER.trace("server deletion has started");
-            // token
-            String response = RestAPI.post(getToken_URL, RequestBody.getToken(accountId, accountPassword), timeout);
-            String token = ResponseParser.statusCodeParser(response);
-            Etc.check(token);
-            LOGGER.trace("token creation has succeeded");
+            TokenResponse tokenResponse = ResourceHandler.getToken(tokenIssuaceUrl, accountId, accountPassword, timeout);
+            String token = tokenResponse.getToken();
             isVmDeleleted = ResourceHandler.deleteVmOnly(vmForceDeleteUrl, vmListUrl, serverInformation.getVmId(), token, timeout, resourceProcessingTimeoutBesideVm, requestCycle);
             isVolumeDeleleted = ResourceHandler.deleteVolume(volumeDeleteUrl, listOfAllVolumeUrl, serverInformation.getVolumeId(), serverInformation.getProjectId(), token, timeout, resourceProcessingTimeoutBesideVm, requestCycle);
             isFirewallOfInputPortCloseed = ResourceHandler.closeFirewall(serverInformation.getFirewallJobIdOfInputPort(), token, timeout, resourceProcessingTimeoutBesideVm, requestCycle);
@@ -213,9 +198,14 @@ public class KTCloudOpenAPI {
 
         String result;
         String response;
-        result = RestAPI.request(getToken_URL, POST, RequestBody.getToken(accountId, accountPassword));
-        String token = ResponseParser.statusCodeParser(result);
-        String projectID = ResponseParser.getProjectIdFromToken(result);
+
+//        result = RestAPI.request(tokenIssuaceUrl, POST, RequestBody.getToken(accountId, accountPassword));
+//        String token = ResponseParser.statusCodeParser(result);
+//        String projectID = ResponseParser.getProjectIdFromToken(result);
+
+        TokenResponse tokenResponse = ResourceHandler.getToken(tokenIssuaceUrl, accountId, accountPassword, timeout);
+        String token = tokenResponse.getToken();
+        String projectId = tokenResponse.getProjectId();
 
         // close firewall
         result = RestAPI.request(firewallUrl, GET, token, "");
@@ -238,9 +228,9 @@ public class KTCloudOpenAPI {
         Initialization.deleteAllVm(response, token);
 
         //delete volume
-        result = RestAPI.get(listOfAllVolumeUrl + projectID + "/volumes/detail", token, timeout);
+        result = RestAPI.get(listOfAllVolumeUrl + projectId + "/volumes/detail", token, timeout);
         response = ResponseParser.statusCodeParser(result);
-        Initialization.deleteAllVolume(response, token, projectID, timeout);
+        Initialization.deleteAllVolume(response, token, projectId, timeout);
 
 
         LOGGER.trace("initialization has finished");

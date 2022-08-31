@@ -10,11 +10,38 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.omg.PortableInterceptor.LOCATION_FORWARD;
 
+class TokenResponse{
+    private String token="";
+   private String projectId="";
+    
+    TokenResponse(String token, String projectId){
+        this.token = token;
+        this.projectId = projectId;
+    }
+
+    String getToken(){
+        return this.token;
+    }
+
+    String getProjectId(){
+        return this.projectId;
+    }
+
+}
 
 class ResourceHandler {
 
-    static void getToken() throws Exception {
-
+    static TokenResponse getToken(String tokenIssuaceUrl, String accountId, String accountPassword, int timeout) throws Exception {
+        String requestBody = RequestBody.getToken(accountId, accountPassword);
+        String result = RestAPI.post(tokenIssuaceUrl, requestBody, timeout);
+        String token = ResponseParser.statusCodeParser(result);
+        Etc.check(token);
+        KTCloudOpenAPI.LOGGER.trace("token creation has succeeded");
+        String projectId = ResponseParser.getProjectIdFromToken(result);
+        Etc.check(projectId);
+        KTCloudOpenAPI.LOGGER.trace("project id creation has been succeeded");
+        
+        return new TokenResponse(token,projectId);
     }
 
     static String getVm(String getVmUrl, String token, String serverName, String vmImageId, String specs, String networkId, String sshKeyName, int timeout) throws Exception {

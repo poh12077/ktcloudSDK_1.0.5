@@ -2,7 +2,7 @@ package com.solbox.delivery.ktcloudSDK;
 
 class Test {
    static void test() throws Exception{
-        String  result = RestAPI.post(KTCloudOpenAPI.getToken_URL, RequestBody.getToken("infra.op@solbox.com", "xJd*Qv*cBXpd7qX"), 10);
+        String  result = RestAPI.post(KTCloudOpenAPI.tokenIssuaceUrl, RequestBody.getToken("infra.op@solbox.com", "xJd*Qv*cBXpd7qX"), 10);
         String token = ResponseParser.statusCodeParser(result);
         Etc.check(token);
         String projectId = ResponseParser.getProjectIdFromToken(result);
